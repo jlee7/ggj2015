@@ -4,21 +4,16 @@ from cocos.director import director
 
 import pyglet
 from pyglet.window import key
+from ninja import *
 
 
-class Ninja(cocos.sprite.Sprite):
-
-    def __init__(self):
-
-        super(Ninja, self).__init__("Idle__000.png")
-        self.scale_x = -1
 
 
 class NinjaMovementController(actions.Action):
 
     global keyboard
 
-    def step(self,dt):    
+    def step(self,dt):
 
         if (keyboard[key.RIGHT]):
             self.target.x += 10
