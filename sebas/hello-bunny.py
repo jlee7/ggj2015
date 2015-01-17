@@ -1,6 +1,5 @@
-import pygame
+import pygame, math
 from pygame.locals import *
-import math
 
 pygame.init()
 width, height = 640, 480
@@ -10,13 +9,23 @@ keys = [False, False, False, False]
 playerpos = [100,100]
 
 player = pygame.image.load("../Idle__000.png")
-bg = pygame.image.load("ryloth.jpg")
+bg = pygame.image.load("ryloth.jpg").convert()
 
-while 1:
+clock = pygame.time.Clock()
+
+step_speed = 5
+
+def redraw_ninja():
     screen.fill(0)
     screen.blit(bg,(0,0))
     screen.blit(player, playerpos)
     pygame.display.flip()
+
+redraw_ninja()
+
+while True:
+
+    clock.tick(120)
 
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -42,12 +51,17 @@ while 1:
                 keys[3] = False
 
     if keys[0]:
-        playerpos[1] -= 5
+        playerpos[1] -= step_speed
+        redraw_ninja()
     elif keys[2]:
-        playerpos[1] += 5
+        playerpos[1] += step_speed
+        redraw_ninja()
     elif keys[1]:
-        playerpos[0] -= 5
+        playerpos[0] -= step_speed
+        redraw_ninja()
     elif keys[3]:
-        playerpos[0] += 5
+        playerpos[0] += step_speed
+        redraw_ninja()
+
 
 
