@@ -1,4 +1,4 @@
-# Global Game Jam 20015 Project
+# Global Game Jam 2015 Project
 
 ## Participants
 
