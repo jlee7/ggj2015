@@ -1,7 +1,7 @@
 from event_manager import *
 import pygame
 
-tick_speed = 15 # framerate
+tick_speed = 5 # framerate
 
 clock = pygame.time.Clock()
 
