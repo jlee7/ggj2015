@@ -11,6 +11,7 @@ class GameModel(object):
         self.event_manager.register_listener(self)
         self.items = []
         self.score = 0
+        self.partytime = True
 
     #----------------------------------------------------------------------
 
@@ -25,3 +26,8 @@ class GameModel(object):
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
         self.event_manager.post(SpawnItemEvent(item_model))
 
+    def toggle_partytime(self):
+        if self.partytime == True:
+            self.partytime = False
+        else:
+            self.partytime = True

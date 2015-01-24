@@ -37,7 +37,9 @@ class GameView(object):
         self.text_score = self.game_text.get_score_text(self.game_model.score)
         self.mode_text = self.game_text.get_announce_text()
         self.textlist = [self.text_score]
-        self.modelist = [self.mode_text]
+        self.modelist = []
+        for modetext in self.mode_text:
+            self.modelist.append(modetext)
         # groups
         self.itemgroup = pygame.sprite.Group()
         self.textgroup = pygame.sprite.Group()
@@ -134,5 +136,6 @@ class GameText(object):
 
     def get_announce_text(self):
         return self.font_big.render("Party Hard!", True, (0, 128, 0))
+        return self.font_big.render("Study Time!", True, (0, 128, 0))
 
 
