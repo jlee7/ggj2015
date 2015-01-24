@@ -2,6 +2,7 @@ import pygame
 from pygame.locals import *
 
 DUDE_IMAGE = "assets/party-dude-155-171.png"
+DUDE_SPEED = 10
 
 class Dude(pygame.sprite.Sprite):
     def __init__(self, x_pos, y_pos):
@@ -12,8 +13,8 @@ class Dude(pygame.sprite.Sprite):
     	self.rect.y = y_pos
 
     def moveRight(self):
-    	self.rect.x += 5
+    	self.rect.x += DUDE_SPEED
 
     def moveLeft(self):
-    	self.rect.x -= 5
+    	self.rect.x -= DUDE_SPEED
 

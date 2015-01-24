@@ -40,7 +40,6 @@ class GameView(object):
         # basic text
         self.game_text = GameText()
         self.text_score = self.game_text.get_score_text(self.game_model.score)
-
         self.mode_text1 = self.game_text.get_announce_text1()
         self.mode_text2 = self.game_text.get_announce_text2()
         self.textlist = [self.text_score]
@@ -58,6 +57,9 @@ class GameView(object):
         self.game_sound = GameSound()
         main_track = self.game_sound.load_main_track()
         #main_track.play(-1)
+        # flags
+        self.game_over_screen = False
+
 
     #---------------------------------------------------------------------- 
 
@@ -114,6 +116,9 @@ class GameView(object):
         # DRAW SHIT
         if self.game_model.state is not GameModel.STATE_PAUSED:
             self.update_screen()
+        elif not self.game_over_screen:
+            self.show_game_over()
+            self.game_over_screen = True
 
 
     def display_announce_text(self):
@@ -123,6 +128,20 @@ class GameView(object):
         self.textlist.remove(self.text_score)
         self.text_score = self.game_text.get_score_text(self.game_model.score)
         self.textlist.append(self.text_score)
+
+    def show_game_over(self):
+        # Box
+        box = pygame.Surface((600,500))
+        box.set_alpha(128)
+        box.fill((255, 0, 0))
+
+        # Text
+        text_game_over_headline = self.game_text.get_game_over_headline()
+        box.blit(text_game_over_headline, (0, 0))
+
+        # Draw
+        self.screen.blit(box,(200,100))
+        pygame.display.flip()
 
     def update_screen(self):
         
@@ -135,6 +154,8 @@ class GameView(object):
         #Modusanzeige
         self.screen.blit(self.modetext, (700, 0))
 
+        #pygame.draw.rect(self.screen, (255, 0, 0), [20,20,20,20], 3)
+
         pygame.display.flip()
 
 
@@ -145,10 +166,10 @@ class GameText(object):
 
         self.font_big = pygame.font.SysFont(None, 72)
         self.font_score = pygame.font.SysFont(None, 44)
+        self.font_game_over_headline = pygame.font.SysFont(None, 122)
 
     def get_score_text(self, score):
         score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
-        #print score_text
         return score_text
 
     def get_announce_text1(self):
@@ -157,4 +178,7 @@ class GameText(object):
     def get_announce_text2(self):
         return self.font_big.render("Study Time!", True, (0, 128, 0))
 
+    def get_game_over_headline(self):
+        return self.font_game_over_headline.render("GAME OVER", True, (0, 128, 0))
+        return score_text
 
