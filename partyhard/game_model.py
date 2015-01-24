@@ -26,6 +26,7 @@ class GameModel(object):
                 self.spawn_item()
         elif isinstance (event, CollisionEvent):
             if self.partytime:
+                print "PARTEEEEEEEEEEY"
                 if event.item.partytime:
                     self.score += 5
                 else:

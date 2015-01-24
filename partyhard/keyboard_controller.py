@@ -9,7 +9,6 @@ class KeyboardController(object):
         self.keys = [False, False]
         self.controlkeys =[False]
 
-
     def notify(self, event):
         if isinstance(event, TickEvent):
             for event in pygame.event.get():
@@ -40,6 +39,7 @@ class KeyboardController(object):
             if direction:
             	self.evManager.post(DudeMoveEvent(direction))
             #if self.controlkeys[0]:
+                #pass
                 #self.evManager.post(PartyTimeSwitch())
 
     def quit_if_we_must(self, event):
