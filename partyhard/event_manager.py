@@ -63,14 +63,14 @@ class PartyTimeSwitch(Event):
     def __init__(self):
         self.name = "Switch Party Time"
 
-<<<<<<< HEAD
+
 class GameView(Event):
     def __init__(self):
         self.name = "GameView via EventManager"
 
-=======
+
 class StopGameEvent(Event):
     def __init__(self):
         self.name = "Stop Game"
->>>>>>> 44e55d80f6730ad475d1dc181c8d5c7c930075e0
+
 
