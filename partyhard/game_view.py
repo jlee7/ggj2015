@@ -40,10 +40,7 @@ class GameView(object):
         # basic text
         self.game_text = GameText()
         self.text_score = self.game_text.get_score_text(self.game_model.score)
-<<<<<<< HEAD
-        
-=======
->>>>>>> 44e55d80f6730ad475d1dc181c8d5c7c930075e0
+
         self.mode_text1 = self.game_text.get_announce_text1()
         self.mode_text2 = self.game_text.get_announce_text2()
         self.textlist = [self.text_score]
@@ -104,7 +101,6 @@ class GameView(object):
                 #print event.direction
                 self.dude.moveRight()
 
-<<<<<<< HEAD
         elif isinstance(event, PartyTimeSwitch):
             if self.game_model.partytime == True:
                 self.background = pygame.image.load(BACKGROUND_PARTYTIME)
@@ -114,13 +110,11 @@ class GameView(object):
                 self.modetext = self.modelist[1]
 
             
-=======
 
-        # DRAW SHIT
-        if self.game_model.state is not GameModel.STATE_PAUSED:
-            self.update_screen()
+        # # DRAW SHIT
+        # if self.game_model.state is not GameModel.STATE_PAUSED:
+        #     self.update_screen()
 
->>>>>>> 44e55d80f6730ad475d1dc181c8d5c7c930075e0
 
     def display_announce_text(self):
         pass
