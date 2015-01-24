@@ -9,6 +9,7 @@ from random import randint
 WIDTH = 1024
 HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
+BACKGROUND_IMAGE = ""
 
 #----------------------------------------------------------------------
 
