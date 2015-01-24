@@ -18,8 +18,6 @@ class GameModel(object):
         self.partytime = True
         self.state = GameModel.STATE_PREPARING
 
-        #self.game_view = GameView(event_manager, game_model)
-
     #----------------------------------------------------------------------
 
     def notify(self, event):
@@ -43,7 +41,8 @@ class GameModel(object):
             else:
                 self.partytime = True
         elif isinstance(event, StopGameEvent):
-            self.state = GameModel.STATE_PAUSED
+            pass
+
 
 
     def spawn_item(self):

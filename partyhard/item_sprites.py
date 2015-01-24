@@ -4,9 +4,9 @@ from random import randint
 
 DEMOSPRITE = "assets/item-book.png"
 BEER_IMAGE = "assets/item-six-pack.png"
-COCKTAIL_IMAGE = "assets/dummy.png"
+COCKTAIL_IMAGE = "assets/item-cocktail.png"
 BOOK_IMAGE = "assets/item-book.png"
-PEN_IMAGE = "assets/dummy.png"
+LAPTOP_IMAGE = "assets/item-laptop.png"
 
 #----------------------------------------------------------------------
 
@@ -43,6 +43,6 @@ class BookSprite(ItemSprite):
 class PenSprite(ItemSprite):
     def __init__(self, model):
         ItemSprite.__init__(self, model)
-        self.image = pygame.image.load(PEN_IMAGE)
+        self.image = pygame.image.load(LAPTOP_IMAGE)
         self.rect = self.image.get_rect()
 
