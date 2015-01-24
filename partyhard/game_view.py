@@ -9,7 +9,7 @@ from event_manager import *
 from dude import *
 from random import randint
 from game_sound import *
-
+from game_model import *
 
 
 WIDTH = 1024
@@ -35,7 +35,6 @@ class GameView(object):
         # basic text
         self.game_text = GameText()
         self.text_score = self.game_text.get_score_text(self.game_model.score)
-
         self.mode_text1 = self.game_text.get_announce_text1()
         self.mode_text2 = self.game_text.get_announce_text2()
         self.textlist = [self.text_score]
@@ -57,14 +56,13 @@ class GameView(object):
 
     def notify(self, event):
         
+        # Ticke Event
         if isinstance(event,TickEvent):
-
             # falling items
             for item in self.itemgroup:
                 item.rect.y += item.fall_speed
                 if item.rect.y > HEIGHT: # items falling out of the screen
                     item.kill()
-
             # colliding items
             collided_item = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
             if collided_item:
@@ -72,12 +70,9 @@ class GameView(object):
                 self.update_score()
                 collided_item.kill()
 
-            # DRAW SHIT
-            self.update_screen()
 
-
+        # Spawn Event
         elif isinstance(event,SpawnItemEvent):
-
             if isinstance (event.item, BeerModel):
                 sprite = BeerSprite(event.item)
             elif isinstance (event.item, CocktailModel):
@@ -86,20 +81,24 @@ class GameView(object):
                 sprite = BookSprite(event.item)
             elif isinstance (event.item, PenModel):
                 sprite = PenSprite(event.item)
-
             if sprite:
                 sprite.rect.x = randint(0,WIDTH)
                 self.itemgroup.add(sprite)
 
+        # Spawn Event
         elif isinstance(event, DudeMoveEvent):
-
             if event.direction == "left":
                 #print event.direction
                 self.dude.moveLeft()
-                
             elif event.direction == "right":
                 #print event.direction
                 self.dude.moveRight()
+
+
+        # DRAW SHIT
+        if self.game_model.state is not GameModel.STATE_PAUSED:
+            self.update_screen()
+
 
     def display_announce_text(self):
         pass

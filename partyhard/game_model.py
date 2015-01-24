@@ -6,12 +6,17 @@ import random
 
 class GameModel(object):
 
+    STATE_PREPARING = 'preparing'
+    STATE_RUNNING = 'running'
+    STATE_PAUSED = 'paused'
+
     def __init__(self, event_manager):
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
         self.items = []
         self.score = 0
         self.partytime = True
+        self.state = GameModel.STATE_PREPARING
 
     #----------------------------------------------------------------------
 
@@ -35,6 +40,9 @@ class GameModel(object):
                 self.partytime = False
             else:
                 self.partytime = True
+        elif isinstance(event, StopGameEvent):
+            self.state = GameModel.STATE_PAUSED
+
 
     def spawn_item(self):
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
