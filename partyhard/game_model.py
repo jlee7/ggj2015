@@ -22,18 +22,9 @@ class GameModel(object):
         if isinstance (event, TickEvent):
             if(event.tick_number % 15 == 0):
                 #print event.tick_number
-                self.spawn_item(random.choice(self.item_types))
+                self.spawn_item()
 
-    def spawn_item(self, item_type):
-
-        if item_type == 'beer':
-            item_model = BeerModel()
-        elif item_type == 'cocktail':
-            item_model = CocktailModel()         
-        elif item_type == 'book':
-            item_model = BookModel()         
-        elif item_type == 'pen':
-            item_model = PenModel()  
+    def spawn_item(self):  
 
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
 
