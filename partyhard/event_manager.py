@@ -59,3 +59,8 @@ class CollisionEvent(Event):
         self.item = item
         self.name = "CollisionEvent Item " + item.__class__.__name__
 
+class PartyTimeSwitch(Event):
+    def __init__(self):
+        self.name = "Switch Party Time"
+        
+
