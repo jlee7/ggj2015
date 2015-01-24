@@ -106,11 +106,11 @@ class GameView(object):
             #print "the moves of the dude are in the view!"
 
             if event.direction == "left":
-                print event.direction
+                #print event.direction
                 self.dude.moveLeft()
                 
             elif event.direction == "right":
-                print event.direction
+                #print event.direction
                 self.dude.moveRight()
 
 

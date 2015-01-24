@@ -12,8 +12,8 @@ class Dude(pygame.sprite.Sprite):
 
     def moveRight(self):
     	self.position[0] += 5
-    	print "moving right"
+    	#print "moving right"
 
     def moveLeft(self):
     	self.position[0] -= 5
-    	print "moving left"
+    	#print "moving left"
