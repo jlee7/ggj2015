@@ -20,9 +20,9 @@ class GameModel(object):
             if(event.tick_number % 15 == 0):
                 self.spawn_item()
         elif isinstance (event, CollisionEvent):
-            
+            pass
 
-    def spawn_item(self):  
+    def spawn_item(self):
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
         self.event_manager.post(SpawnItemEvent(item_model))
 

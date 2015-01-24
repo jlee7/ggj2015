@@ -120,6 +120,10 @@ class GameView(object):
         #Modusanzeige
         #for text in self.modelist:
         #    self.screen.blit(text, (700,0))
+        if self.game_model.partytime == True:
+            self.screen.blit(self.modelist[0], (700, 0))
+        else:
+            self.screen.blit(self.modelist[1], (700, 0))
 
         self.screen.blit(self.modelist[0], (700,0))
         pygame.display.flip()
