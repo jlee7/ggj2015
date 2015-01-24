@@ -43,13 +43,12 @@ class GameView(object):
         #self.textdict = {'score' : self.game_text.get_score_text()}
 
         self.text_score = self.game_text.get_score_text(self.game_model.score)
-        self.mode_text = self.game_text.get_announce_text()
+        self.mode_text1 = self.game_text.get_announce_text1()
+        self.mode_text2 = self.game_text.get_announce_text2()
 
 
         self.textlist = [self.text_score]
-        self.modelist = []
-        for modetext in self.mode_text:
-            self.modelist.append(modetext)
+        self.modelist = [self.mode_text1, self.mode_text2]
 
         self.itemgroup = pygame.sprite.Group()
         #self.itemgroup.add(self.demosprite)        
@@ -151,8 +150,10 @@ class GameView(object):
         for text in self.textlist:
             self.screen.blit(text,(0,0))
         #Modusanzeige
-        for text in self.modelist:
-            self.screen.blit(text, (700,0))
+        #for text in self.modelist:
+        #    self.screen.blit(text, (700,0))
+        if Game
+        self.screen.blit(self.modelist[0], (700,0))
         pygame.display.flip()
 
 
@@ -169,8 +170,10 @@ class GameText(object):
         #print score_text
         return score_text
 
-    def get_announce_text(self):
+    def get_announce_text1(self):
         return self.font_big.render("Party Hard!", True, (0, 128, 0))
+
+    def get_announce_text2(self):
         return self.font_big.render("Study Time!", True, (0, 128, 0))
 
 
