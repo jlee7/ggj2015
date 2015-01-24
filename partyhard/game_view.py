@@ -83,6 +83,7 @@ class GameView(object):
                 item.rect.y += item.fall_speed
                 # items falling out of the screen
                 if item.rect.y > HEIGHT:
+                    print item, "gone"
                     item.kill()
                     #print "item killed, current items in group: " + str(len(self.itemgroup)) 
                 
@@ -94,11 +95,13 @@ class GameView(object):
 
             collision = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
             if collision:
-                remove_list = []
-                remove_list.append(collision)
-                print collision
-                for thing in remove_list:
-                    self.itemgroup.remove(thing)
+                #remove_list = []
+                #remove_list.append(collision)
+                print collision , "killed"
+                collision.kill()
+                del collision
+                #for thing in remove_list:
+                #    self.itemgroup.remove(thing)
 
             #print self.screen
             # self.itemgroup.clear(self.screen,self.background)
