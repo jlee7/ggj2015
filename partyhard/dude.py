@@ -12,8 +12,8 @@ class Dude(pygame.sprite.Sprite):
     	self.rect.y = y_pos
 
     def moveRight(self):
-    	self.rect.x += 5
+    	self.rect.x += 30
 
     def moveLeft(self):
-    	self.rect.x -= 5
+    	self.rect.x -= 30
 

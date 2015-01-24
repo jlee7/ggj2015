@@ -56,8 +56,9 @@ class GameView(object):
         pygame.display.flip()
         # sound
         self.game_sound = GameSound()
-        main_track = self.game_sound.load_main_track()
-        #main_track.play(-1)
+        self.party_track = self.game_sound.load_party_track()
+        self.party_track.play(-1)
+        self.study_track = self.game_sound.load_study_track()
 
     #---------------------------------------------------------------------- 
 
@@ -106,9 +107,13 @@ class GameView(object):
             if self.game_model.partytime == True:
                 self.background = pygame.image.load(BACKGROUND_PARTYTIME)
                 self.modetext = self.modelist[0]
+                self.study_track.stop()
+                self.party_track.play(-1)
             else:
                 self.background = pygame.image.load(BACKGROUND_STUDYTIME)
                 self.modetext = self.modelist[1]
+                self.party_track.stop()
+                self.study_track.play(-1)
 
 
         # DRAW SHIT
