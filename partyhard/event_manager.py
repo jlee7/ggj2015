@@ -8,6 +8,7 @@ class EventManager(object):
 
     def __init__(self):
         self.listeners = WeakKeyDictionary()
+        self.last_tick = 0
 
     #----------------------------------------------------------------------
 
@@ -17,9 +18,17 @@ class EventManager(object):
     #----------------------------------------------------------------------
 
     def post(self, event):
+<<<<<<< HEAD
         if not isinstance (event, TickEvent):
             pass
             #print "Event: " + event.name
+=======
+        if not isinstance (event, TickEvent) and not isinstance (event, DudeMoveEvent):
+            print "Event: " + event.name + " (" + str(self.last_tick) + ")"
+        elif isinstance (event, TickEvent):
+            self.last_tick = event.tick_number
+
+>>>>>>> ca5ed85862ee12a0dc01d97e554897fc5fb6b104
         for listener in self.listeners:
             #print event
             listener.notify(event)
