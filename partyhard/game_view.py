@@ -6,6 +6,8 @@ WIDTH = 1024
 HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
 
+#----------------------------------------------------------------------
+
 class GameView(object):
 
     def __init__(self, event_manager):
@@ -30,6 +32,8 @@ class GameView(object):
 
         pygame.display.flip()
 
+    #---------------------------------------------------------------------- 
+    
     def notify(self, event):
         
         if isinstance(event,TickEvent):
@@ -38,7 +42,7 @@ class GameView(object):
             for item in self.itemgroup:
                 item.rect.y += item.fall_speed
 
-            print self.screen
+            #print self.screen
             self.itemgroup.clear(self.screen,self.background)
             self.itemgroup.draw(self.screen)
             pygame.display.flip()

@@ -7,21 +7,21 @@ from time_controller import TimeController
 from game_view import GameView
 import pygame
 
+#----------------------------------------------------------------------
+
 def main():
 
     pygame.init()
 
     event_manager = EventManager()
-    event_manager.test()
-
+    game_model = Game(event_manager)
     keyboard_controller = KeyboardController(event_manager)
-
-    game_view = GameView(event_manager)
-
+    game_view = GameView(event_manager) # sollte von GameModel aufgemacht werden
     time_controller = TimeController(event_manager)
 
     time_controller.run()
 
+#----------------------------------------------------------------------
 
 if __name__ == "__main__":
     main()
