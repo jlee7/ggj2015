@@ -1,7 +1,7 @@
 import pygame
 from pygame.locals import *
 
-DUDE_IMAGE = "assets/party-dude-155-171.png"
+DUDE_IMAGE = "assets/party-dude-hands-up.png"
 
 class Dude(pygame.sprite.Sprite):
     def __init__(self, x_pos, y_pos):

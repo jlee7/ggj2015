@@ -101,6 +101,7 @@ class GameView(object):
                 #print event.direction
                 self.dude.moveRight()
 
+        # Toggle Party Time
         elif isinstance(event, PartyTimeSwitch):
             if self.game_model.partytime == True:
                 self.background = pygame.image.load(BACKGROUND_PARTYTIME)
@@ -109,7 +110,6 @@ class GameView(object):
                 self.background = pygame.image.load(BACKGROUND_STUDYTIME)
                 self.modetext = self.modelist[1]
 
-            
 
         # DRAW SHIT
         if self.game_model.state is not GameModel.STATE_PAUSED:
@@ -156,5 +156,3 @@ class GameText(object):
 
     def get_announce_text2(self):
         return self.font_big.render("Study Time!", True, (0, 128, 0))
-
-

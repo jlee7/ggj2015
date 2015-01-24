@@ -1,7 +1,7 @@
 from event_manager import *
 import pygame
 
-GAME_LENGTH_SEC = 5
+GAME_LENGTH_SEC = 10
 GAME_LENGTH = GAME_LENGTH_SEC * 1000
 tick_speed = 30 # framerate
 
@@ -29,6 +29,13 @@ class TimeController(object):
             print self.get_countdown_time()
             if self.game_time > GAME_LENGTH:
                 self.event_manager.post(StopGameEvent())
+
+            # Switch game modes by time
+            # Don't ask me!
+            if self.game_time % 150 == 0:
+                self.event_manager.post(PartyTimeSwitch())
+
+
 
             # Tick Event
             self.tick_number += 1
