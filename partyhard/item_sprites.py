@@ -1,10 +1,11 @@
 import pygame
 from random import randint
 
-DEMOSPRITE = "assets/dummy.png"
+
+DEMOSPRITE = "assets/item-book.png"
 BEER_IMAGE = "assets/dummy.png"
 COCKTAIL_IMAGE = "assets/dummy.png"
-BOOK_IMAGE = "assets/dummy.png"
+BOOK_IMAGE = "assets/item-book.png"
 PEN_IMAGE = "assets/dummy.png"
 
 #----------------------------------------------------------------------
