@@ -40,7 +40,7 @@ class Event(object):
         self.name = "Generic Event"
 
 class TickEvent(Event):
-    def __init__(self, tick_number):
+    def __init__(self, tick_number, game_time):
         self.name = "Timer Tick"
         self.tick_number = tick_number
 
@@ -63,8 +63,14 @@ class PartyTimeSwitch(Event):
     def __init__(self):
         self.name = "Switch Party Time"
 
+<<<<<<< HEAD
 class GameView(Event):
     def __init__(self):
         self.name = "GameView via EventManager"
 
+=======
+class StopGameEvent(Event):
+    def __init__(self):
+        self.name = "Stop Game"
+>>>>>>> 44e55d80f6730ad475d1dc181c8d5c7c930075e0
 
