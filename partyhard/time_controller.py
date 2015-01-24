@@ -1,5 +1,6 @@
 from event_manager import *
 import pygame
+import random
 
 GAME_LENGTH_SEC = 10
 GAME_LENGTH = GAME_LENGTH_SEC * 1000
@@ -17,11 +18,13 @@ class TimeController(object):
         self.event_manager.register_listener(self)
         self.game_time = 0.0
         self.keep_running = True
+        self.ticker = 0
 
     #----------------------------------------------------------------------
 
     def run(self):
         while True:
+            self.ticker += 1
 
             clock.tick(tick_speed)
 
@@ -32,8 +35,9 @@ class TimeController(object):
 
             # Switch game modes by time
             # Don't ask me!
-            if self.game_time % 150 == 0:
+            if self.ticker > random.randrange(200, 300):
                 self.event_manager.post(PartyTimeSwitch())
+                self.ticker = 0
 
 
 
