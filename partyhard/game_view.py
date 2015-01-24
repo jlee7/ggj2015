@@ -78,6 +78,12 @@ class GameView(object):
                 self.event_manager.post(CollisionEvent(collided_item.item_model))
                 self.update_score()
                 collided_item.kill()
+            # DRAW SHIT
+            if self.game_model.state is not GameModel.STATE_PAUSED:            
+                self.update_screen()
+            elif not self.game_over_screen:
+                self.show_game_over()
+                self.game_over_screen = True
 
 
         # Spawn Event
@@ -113,12 +119,7 @@ class GameView(object):
                 self.modetext = self.modelist[1]
 
 
-        # DRAW SHIT
-        if self.game_model.state is not GameModel.STATE_PAUSED:
-            self.update_screen()
-        elif not self.game_over_screen:
-            self.show_game_over()
-            self.game_over_screen = True
+
 
 
     def display_announce_text(self):
@@ -151,12 +152,13 @@ class GameView(object):
         #Punkteanzeige
         for text in self.textlist:
             self.screen.blit(text,(0,0))
+            pass
         #Modusanzeige
         self.screen.blit(self.modetext, (700, 0))
 
         #pygame.draw.rect(self.screen, (255, 0, 0), [20,20,20,20], 3)
 
-        pygame.display.flip()
+        pygame.display.update(self.dude.rect)
 
 
 
