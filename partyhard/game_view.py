@@ -125,7 +125,6 @@ class GameView(object):
         else:
             self.screen.blit(self.modelist[1], (700, 0))
 
-        self.screen.blit(self.modelist[0], (700,0))
         pygame.display.flip()
 
 

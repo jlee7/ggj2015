@@ -7,6 +7,7 @@ class KeyboardController(object):
         self.evManager = evManager
         self.evManager.register_listener(self)
         self.keys = [False, False]
+        self.controlkeys =[False]
 
 
     def notify(self, event):
@@ -20,12 +21,16 @@ class KeyboardController(object):
                         self.keys[0]=True
                     elif event.key==pygame.K_d:
                         self.keys[1]=True
+                    elif event.key ==pygame.K_m:
+                        self.controlkeys[0]=True
 
                 if event.type == pygame.KEYUP:
                     if event.key==pygame.K_a:
                         self.keys[0]=False
                     elif event.key==pygame.K_d:
                         self.keys[1]=False
+                    elif event.key==pygame.K_m:
+                        self.controlkeys[0]=False
             direction = False
             if self.keys[0]:
                 direction = "left"
@@ -33,6 +38,8 @@ class KeyboardController(object):
                 direction = "right"
             if direction:
             	self.evManager.post(DudeMoveEvent(direction))
+            if self.controlkeys[0]:
+                pass #hier im game-model den modus wechseln
 
     def quit_if_we_must(self, event):
         if event.type == pygame.QUIT:
