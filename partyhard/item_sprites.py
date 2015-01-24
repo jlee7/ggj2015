@@ -5,7 +5,7 @@ DEMOSPRITE = "assets/dummy.png"
 
 #----------------------------------------------------------------------
 
-class Item(pygame.sprite.Sprite):
+class ItemSprite(pygame.sprite.Sprite):
 
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -16,6 +16,6 @@ class Item(pygame.sprite.Sprite):
 
 #----------------------------------------------------------------------
 
-class Beer(Item):
-    def __init__(self):
-        Item.__init__()
+class BeerSprite(ItemSprite):
+    def __init__(self, beer_model):
+        pass

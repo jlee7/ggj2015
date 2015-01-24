@@ -1,6 +1,7 @@
 import pygame
-from items import *
-from event_manager import TickEvent
+from item_sprites import *
+from item_models import *
+from event_manager import *
 
 WIDTH = 1024
 HEIGHT = 680
@@ -22,7 +23,7 @@ class GameView(object):
         self.background.fill((0,255,0))
         self.screen.blit(self.background,(0,0))
 
-        self.demosprite = Item()
+        self.demosprite = ItemSprite()
 
         self.itemgroup = pygame.sprite.Group()
         self.itemgroup.add(self.demosprite)        
@@ -33,7 +34,7 @@ class GameView(object):
         pygame.display.flip()
 
     #---------------------------------------------------------------------- 
-    
+
     def notify(self, event):
         
         if isinstance(event,TickEvent):
@@ -46,5 +47,13 @@ class GameView(object):
             self.itemgroup.clear(self.screen,self.background)
             self.itemgroup.draw(self.screen)
             pygame.display.flip()
+
+        elif isinstance(event,SpawnItemEvent):
+
+            if isinstance (event.item, BeerModel):
+
+                print "spawning Beer"
+
+
 
 

@@ -43,4 +43,8 @@ class DudeMoveEvent(Event):
     def __init__(self, direction):
         self.name = "Dude Move"
 
+class SpawnItemEvent(Event):
+    def __init__(self, item):
+        self.item = item
+        self.name = "Spawn Item"
 
