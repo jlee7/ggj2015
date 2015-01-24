@@ -49,13 +49,11 @@ class GameView(object):
         #self.itemgroup.add(self.demosprite)        
         #self.itemgroup.draw(self.screen)
 
-<<<<<<< HEAD
+
         self.textgroup = pygame.sprite.Group()
 
         self.dude = Dude(WIDTH/2,HEIGHT-172)
-=======
-        self.dude = Dude(WIDTH/2,HEIGHT-60)
->>>>>>> ca5ed85862ee12a0dc01d97e554897fc5fb6b104
+
         self.screen.blit(self.dude.image, self.dude.position)
 
         #self.screen.blit(self.demosprite.image, DEMOSPRITE_POSITION)
@@ -87,8 +85,13 @@ class GameView(object):
                 if item.rect.y > HEIGHT:
                     item.kill()
                     #print "item killed, current items in group: " + str(len(self.itemgroup)) 
-<<<<<<< HEAD
-            
+                
+                    self.game_model.score += 1 
+                    #print "game model score: " + str(self.game_model.score)
+                    self.textlist.remove(self.text_score)
+                    self.text_score = self.game_text.get_score_text(self.game_model.score)
+                    self.textlist.append(self.text_score)
+
             collision = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
             if collision:
                 remove_list = []
@@ -97,15 +100,6 @@ class GameView(object):
                 for thing in remove_list:
                     self.itemgroup.remove(thing)
 
-=======
-                    self.game_model.score += 1 
-                    #print "game model score: " + str(self.game_model.score)
-                    self.textlist.remove(self.text_score)
-                    self.text_score = self.game_text.get_score_text(self.game_model.score)
-                    self.textlist.append(self.text_score)
-
-            # UPDATE SHIT
->>>>>>> ca5ed85862ee12a0dc01d97e554897fc5fb6b104
             #print self.screen
             # self.itemgroup.clear(self.screen,self.background)
             self.update_screen()
@@ -122,13 +116,6 @@ class GameView(object):
                 #self.itemgroup.draw(self.screen)
 
         elif isinstance(event, DudeMoveEvent):
-<<<<<<< HEAD
-            if event.direction == "left":
-                self.dude.moveLeft()
-                
-            elif event.direction == "right":
-=======
-            #print "the moves of the dude are in the view!"
 
             if event.direction == "left":
                 #print event.direction
@@ -136,7 +123,6 @@ class GameView(object):
                 
             elif event.direction == "right":
                 #print event.direction
->>>>>>> ca5ed85862ee12a0dc01d97e554897fc5fb6b104
                 self.dude.moveRight()
 
     def display_announce_text(self):
