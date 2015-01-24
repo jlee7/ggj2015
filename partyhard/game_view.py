@@ -11,6 +11,7 @@ from random import randint
 from game_sound import *
 
 
+
 WIDTH = 1024
 HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
@@ -42,8 +43,10 @@ class GameView(object):
         #self.textdict = {'score' : self.game_text.get_score_text()}
 
         self.text_score = self.game_text.get_score_text(self.game_model.score)
+        self.mode_text = self.game_text.get_announce_text()
 
         self.textlist = [self.text_score]
+        self.modelist = [self.mode_text]
 
         self.itemgroup = pygame.sprite.Group()
         #self.itemgroup.add(self.demosprite)        
@@ -97,10 +100,10 @@ class GameView(object):
 
             if collision:
                 print self.dude.rect, collision.rect
-                #remove_list = []
-                #remove_list.append(collision)
+
                 collision.kill()
                 print collision , "killed"
+
                 #for thing in remove_list:
                 #    self.itemgroup.remove(thing)
 
@@ -135,9 +138,13 @@ class GameView(object):
     def update_screen(self):
         self.screen.blit(self.background,(0,0))
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
-        self.itemgroup.draw(self.screen) 
+        self.itemgroup.draw(self.screen)
+        #Punkteanzeige
         for text in self.textlist:
             self.screen.blit(text,(0,0))
+        #Modusanzeige
+        for text in self.modelist:
+            self.screen.blit(text, (700,0))
         pygame.display.flip()
 
 
@@ -151,7 +158,6 @@ class GameText(object):
 
     def get_score_text(self, score):
         score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
-        print score_text.image
         #print score_text
         return score_text
 

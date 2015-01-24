@@ -1,7 +1,7 @@
 import pygame
 from random import randint
 
-DEMOSPRITE = "assets/dummy.png"
+DEMOSPRITE = "assets/item-book.png"
 
 
 #----------------------------------------------------------------------
