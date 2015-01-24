@@ -15,7 +15,8 @@ from game_sound import *
 WIDTH = 1024
 HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
-BACKGROUND_IMAGE = "assets/bg-1.jpg"
+BACKGROUND_PARTYTIME = "assets/bg-1.jpg"
+BACKGROUND_STUDYTIME = "assets/bg_dummy_studytime.jpg"
 
 #----------------------------------------------------------------------
 
@@ -30,16 +31,21 @@ class GameView(object):
         # basic screen
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.background=pygame.Surface(self.screen.get_size())
-        self.background=pygame.image.load(BACKGROUND_IMAGE)
+        # Background image depending on mode
+        if self.game_model.partytime == True:
+            self.background=pygame.image.load(BACKGROUND_PARTYTIME)
+        else:
+            self.background=pygame.image.load(BACKGROUND_STUDYTIME)
         self.screen.blit(self.background,(0,0))
         # basic text
         self.game_text = GameText()
         self.text_score = self.game_text.get_score_text(self.game_model.score)
-
+        
         self.mode_text1 = self.game_text.get_announce_text1()
         self.mode_text2 = self.game_text.get_announce_text2()
         self.textlist = [self.text_score]
         self.modelist = [self.mode_text1, self.mode_text2]
+        self.modetext = self.modelist[0]
         # groups
         self.itemgroup = pygame.sprite.Group()
         self.textgroup = pygame.sprite.Group()
@@ -101,6 +107,16 @@ class GameView(object):
                 #print event.direction
                 self.dude.moveRight()
 
+        elif isinstance(event, PartyTimeSwitch):
+            if self.game_model.partytime == True:
+                self.background = pygame.image.load(BACKGROUND_PARTYTIME)
+                self.modetext = self.modelist[0]
+            else:
+                self.background = pygame.image.load(BACKGROUND_STUDYTIME)
+                self.modetext = self.modelist[1]
+
+            
+
     def display_announce_text(self):
         pass
 
@@ -110,6 +126,7 @@ class GameView(object):
         self.textlist.append(self.text_score)
 
     def update_screen(self):
+        
         self.screen.blit(self.background,(0,0))
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
         self.itemgroup.draw(self.screen)
@@ -117,12 +134,7 @@ class GameView(object):
         for text in self.textlist:
             self.screen.blit(text,(0,0))
         #Modusanzeige
-        #for text in self.modelist:
-        #    self.screen.blit(text, (700,0))
-        if self.game_model.partytime == True:
-            self.screen.blit(self.modelist[0], (700, 0))
-        else:
-            self.screen.blit(self.modelist[1], (700, 0))
+        self.screen.blit(self.modetext, (700, 0))
 
         pygame.display.flip()
 

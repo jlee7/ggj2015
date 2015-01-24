@@ -13,6 +13,8 @@ class GameModel(object):
         self.score = 0
         self.partytime = True
 
+        #self.game_view = GameView(event_manager, game_model)
+
     #----------------------------------------------------------------------
 
     def notify(self, event):
