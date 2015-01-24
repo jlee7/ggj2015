@@ -10,6 +10,7 @@ class GameModel(object):
 
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
+        self.items = []
 
     #----------------------------------------------------------------------
 
@@ -25,3 +26,5 @@ class GameModel(object):
         item = BeerModel()
         spawn_event = SpawnItemEvent(item)
         self.event_manager.post(spawn_event)
+        #self.items.append(item)
+        #print "Itemsanzahl: " + str(len(self.items))
