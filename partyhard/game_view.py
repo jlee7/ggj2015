@@ -111,9 +111,9 @@ class GameView(object):
 
             
 
-        # # DRAW SHIT
-        # if self.game_model.state is not GameModel.STATE_PAUSED:
-        #     self.update_screen()
+        # DRAW SHIT
+        if self.game_model.state is not GameModel.STATE_PAUSED:
+            self.update_screen()
 
 
     def display_announce_text(self):
