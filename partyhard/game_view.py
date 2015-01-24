@@ -49,7 +49,7 @@ class GameView(object):
         text = font.render("Party Hard!", True, (0, 128, 0))
         #text_position = text.get_rect()
 
-        self.textgroup.add(text)
+        #self.textgroup.add(text)
 
         self.screen.blit(text,(WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
 
