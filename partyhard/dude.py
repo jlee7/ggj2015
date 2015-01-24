@@ -8,11 +8,12 @@ class Dude(pygame.sprite.Sprite):
     	pygame.sprite.Sprite.__init__(self)
     	self.image = pygame.image.load(DUDE_IMAGE)
     	self.rect = self.image.get_rect()
-    	self.position = [x_pos, y_pos]
+        self.rect.x = x_pos
+    	self.rect.y = y_pos
 
     def moveRight(self):
-    	self.position[0] += 5
+    	self.rect.x += 5
 
     def moveLeft(self):
-    	self.position[0] -= 5
+    	self.rect.x -= 5
 

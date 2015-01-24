@@ -54,7 +54,7 @@ class GameView(object):
 
         self.dude = Dude(WIDTH/2,HEIGHT-172)
 
-        self.screen.blit(self.dude.image, self.dude.position)
+        self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
 
         #self.screen.blit(self.demosprite.image, DEMOSPRITE_POSITION)
 
@@ -94,12 +94,13 @@ class GameView(object):
                     self.textlist.append(self.text_score)
 
             collision = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
+
             if collision:
+                print self.dude.rect, collision.rect
                 #remove_list = []
                 #remove_list.append(collision)
-                print collision , "killed"
                 collision.kill()
-                del collision
+                print collision , "killed"
                 #for thing in remove_list:
                 #    self.itemgroup.remove(thing)
 
@@ -133,10 +134,10 @@ class GameView(object):
 
     def update_screen(self):
         self.screen.blit(self.background,(0,0))
+        self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
         self.itemgroup.draw(self.screen) 
         for text in self.textlist:
             self.screen.blit(text,(0,0))
-        self.screen.blit(self.dude.image, self.dude.position)
         pygame.display.flip()
 
 
@@ -150,6 +151,7 @@ class GameText(object):
 
     def get_score_text(self, score):
         score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
+        print score_text.image
         #print score_text
         return score_text
 
