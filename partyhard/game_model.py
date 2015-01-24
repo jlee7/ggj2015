@@ -31,8 +31,7 @@ class GameModel(object):
                 else:
                     self.score += 5
 
-
-    def spawn_item(self):  
+    def spawn_item(self):
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
         self.event_manager.post(SpawnItemEvent(item_model))
 
