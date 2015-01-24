@@ -19,10 +19,12 @@ DEMOSPRITE_POSITION = [300, 500]
 
 class GameView(object):
 
-    def __init__(self, event_manager):
+    def __init__(self, event_manager, game_model):
 
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
+
+        self.game_model = game_model
 
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
@@ -33,25 +35,29 @@ class GameView(object):
 
         #self.demosprite = ItemSprite()
 
+        self.game_text = GameText()
+
+        #self.textdict = {'score' : self.game_text.get_score_text()}
+
+        self.text_score = self.game_text.get_score_text(self.game_model.score)
+
+        self.textlist = [self.text_score]
+
         self.itemgroup = pygame.sprite.Group()
         #self.itemgroup.add(self.demosprite)        
         #self.itemgroup.draw(self.screen)
 
-        self.textgroup = pygame.sprite.Group()
-
         self.dude = Dude(WIDTH/2,HEIGHT-60)
         self.screen.blit(self.dude.image, self.dude.position)
 
-
         #self.screen.blit(self.demosprite.image, DEMOSPRITE_POSITION)
 
-        font = pygame.font.SysFont(None, 72)
-        text = font.render("Party Hard!", True, (0, 128, 0))
         #text_position = text.get_rect()
 
         #self.textgroup.add(text)
 
-        self.screen.blit(text,(WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
+
+        #self.screen.blit(text,(WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
 
         pygame.display.flip()
 
@@ -72,14 +78,17 @@ class GameView(object):
                 # items falling out of the screen
                 if item.rect.y > HEIGHT:
                     item.kill()
-                    print "item killed, current items in group: " + str(len(self.itemgroup)) 
+                    #print "item killed, current items in group: " + str(len(self.itemgroup)) 
+                    self.game_model.score += 1 
+                    self.text_score = self.game_text.get_score_text(self.game_model.score)
 
+            # UPDATE SHIT
             #print self.screen
-            self.itemgroup.clear(self.screen,self.background)
-            self.itemgroup.draw(self.screen)
+            # self.itemgroup.clear(self.screen,self.background)
+            self.update_screen()
 
 
-            pygame.display.flip()
+
 
         elif isinstance(event,SpawnItemEvent):
 
@@ -89,12 +98,10 @@ class GameView(object):
                 beer_sprite.rect.x = randint(0,WIDTH)
 
                 self.itemgroup.add(beer_sprite)
-                self.itemgroup.draw(self.screen)
-
-                print "spawning Beer"
+                #self.itemgroup.draw(self.screen)
 
         elif isinstance(event, DudeMoveEvent):
-            print "the moves of the dude are in the view!"
+            #print "the moves of the dude are in the view!"
 
             if event.direction == "left":
                 print event.direction
@@ -105,13 +112,25 @@ class GameView(object):
                 self.dude.moveRight()
 
 
+    def update_screen(self):
+        self.screen.blit(self.background,(0,0))
+        self.itemgroup.draw(self.screen) 
+        for text in self.textlist:
+            self.screen.blit(text,(0,0))
+        self.screen.blit(self.dude.image, self.dude.position)
+        pygame.display.flip()
 
-            self.screen.blit(self.background,(0,0))
-            self.screen.blit(self.dude.image, self.dude.position)
+class GameText(object):
 
+    def __init__(self):
 
+        self.font_big = pygame.font.SysFont(None, 72)
+        self.font_score = pygame.font.SysFont(None, 72)
 
+    def get_score_text(self, score):
+        return self.font_score.render("Score: " + str(score), True, (0, 128, 0))
 
-
+    def get_announce_text(self):
+        return self.font_big.render("Party Hard!", True, (0, 128, 0))
 
 

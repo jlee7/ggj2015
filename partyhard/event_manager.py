@@ -8,6 +8,7 @@ class EventManager(object):
 
     def __init__(self):
         self.listeners = WeakKeyDictionary()
+        self.last_tick = 0
 
     #----------------------------------------------------------------------
 
@@ -18,7 +19,10 @@ class EventManager(object):
 
     def post(self, event):
         if not isinstance (event, TickEvent):
-            print "Event: " + event.name
+            print "Event: " + event.name + " (" + str(self.last_tick) + ")"
+        else:
+            self.last_tick = event.tick_number
+
         for listener in self.listeners:
             #print event
             listener.notify(event)

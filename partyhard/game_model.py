@@ -11,6 +11,7 @@ class GameModel(object):
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
         self.items = []
+        self.score = 0
 
     #----------------------------------------------------------------------
 
@@ -19,7 +20,7 @@ class GameModel(object):
 
         if isinstance (event, TickEvent):
             if(event.tick_number % 15 == 0):
-                print event.tick_number
+                #print event.tick_number
                 self.spawn_item()
 
     def spawn_item(self):

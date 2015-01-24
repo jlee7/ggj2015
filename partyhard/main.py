@@ -17,7 +17,7 @@ def main():
     event_manager = EventManager()
     game_model = GameModel(event_manager)
     keyboard_controller = KeyboardController(event_manager)
-    game_view = GameView(event_manager) # sollte von GameModel aufgemacht werden
+    game_view = GameView(event_manager, game_model) # sollte von GameModel aufgemacht werden
     time_controller = TimeController(event_manager)
 
     time_controller.run()
