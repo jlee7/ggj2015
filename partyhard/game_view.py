@@ -112,12 +112,17 @@ class GameView(object):
         elif isinstance(event,SpawnItemEvent):
 
             if isinstance (event.item, BeerModel):
+                sprite = BeerSprite(event.item)
+            elif isinstance (event.item, CocktailModel):
+                sprite = CocktailSprite(event.item)
+            elif isinstance (event.item, BookModel):
+                sprite = BookSprite(event.item)
+            elif isinstance (event.item, PenModel):
+                sprite = PenSprite(event.item)
 
-                beer_sprite = BeerSprite(event.item)
-                beer_sprite.rect.x = randint(0,WIDTH)
-
-                self.itemgroup.add(beer_sprite)
-                #self.itemgroup.draw(self.screen)
+            if sprite:
+                sprite.rect.x = randint(0,WIDTH)
+                self.itemgroup.add(sprite)
 
         elif isinstance(event, DudeMoveEvent):
 
@@ -151,7 +156,6 @@ class GameText(object):
 
     def get_score_text(self, score):
         score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
-        print score_text.image
         #print score_text
         return score_text
 

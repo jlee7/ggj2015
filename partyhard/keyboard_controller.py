@@ -12,9 +12,8 @@ class KeyboardController(object):
     def notify(self, event):
         if isinstance(event, TickEvent):
             for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    exit(0)
+
+                self.quit_if_we_must(event)
 
                 if event.type == pygame.KEYDOWN:
                     if event.key==pygame.K_a:
@@ -34,3 +33,12 @@ class KeyboardController(object):
                 direction = "right"
             if direction:
             	self.evManager.post(DudeMoveEvent(direction))
+
+    def quit_if_we_must(self, event):
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key==pygame.K_ESCAPE:
+                pygame.quit()
+                exit(0)

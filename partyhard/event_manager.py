@@ -52,5 +52,5 @@ class DudeMoveEvent(Event):
 class SpawnItemEvent(Event):
     def __init__(self, item):
         self.item = item
-        self.name = "Spawn Item"
+        self.name = "Spawn Item " + item.__class__.__name__
 
