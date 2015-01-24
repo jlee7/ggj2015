@@ -40,7 +40,7 @@ class Event(object):
         self.name = "Generic Event"
 
 class TickEvent(Event):
-    def __init__(self, tick_number):
+    def __init__(self, tick_number, game_time):
         self.name = "Timer Tick"
         self.tick_number = tick_number
 
