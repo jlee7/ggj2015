@@ -3,6 +3,8 @@ from item_sprites import *
 from item_models import *
 from event_manager import *
 from dude import *
+from random import randint
+
 
 WIDTH = 1024
 HEIGHT = 680
@@ -56,6 +58,12 @@ class GameView(object):
         elif isinstance(event,SpawnItemEvent):
 
             if isinstance (event.item, BeerModel):
+
+                beer_sprite = BeerSprite(event.item)
+                beer_sprite.rect.x = randint(0,WIDTH)
+
+                self.itemgroup.add(beer_sprite)
+                self.itemgroup.draw(self.screen)
 
                 print "spawning Beer"
 

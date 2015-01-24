@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 
 DEMOSPRITE = "assets/dummy.png"
 
@@ -18,4 +19,5 @@ class ItemSprite(pygame.sprite.Sprite):
 
 class BeerSprite(ItemSprite):
     def __init__(self, beer_model):
-        pass
+        ItemSprite.__init__(self)
+        self.fall_speed = randint(4,8)
