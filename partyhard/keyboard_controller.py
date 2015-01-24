@@ -22,7 +22,8 @@ class KeyboardController(object):
                     elif event.key==pygame.K_d:
                         self.keys[1]=True
                     elif event.key ==pygame.K_m:
-                        self.controlkeys[0]=True
+                        #self.controlkeys[0]=True
+                        self.evManager.post(PartyTimeSwitch())
 
                 if event.type == pygame.KEYUP:
                     if event.key==pygame.K_a:
@@ -38,8 +39,8 @@ class KeyboardController(object):
                 direction = "right"
             if direction:
             	self.evManager.post(DudeMoveEvent(direction))
-            if self.controlkeys[0]:
-                pass #hier im game-model den modus wechseln
+            #if self.controlkeys[0]:
+                #self.evManager.post(PartyTimeSwitch())
 
     def quit_if_we_must(self, event):
         if event.type == pygame.QUIT:

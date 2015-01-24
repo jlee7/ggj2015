@@ -30,13 +30,14 @@ class GameModel(object):
                     self.score -= 5
                 else:
                     self.score += 5
+        elif isinstance (event, PartyTimeSwitch):
+            if self.partytime == True:
+                self.partytime = False
+            else:
+                self.partytime = True
 
     def spawn_item(self):
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
         self.event_manager.post(SpawnItemEvent(item_model))
 
-    def toggle_partytime(self):
-        if self.partytime == True:
-            self.partytime = False
-        else:
-            self.partytime = True
+        
