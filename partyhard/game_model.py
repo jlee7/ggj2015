@@ -13,6 +13,7 @@ class GameModel(object):
         self.items = []
         self.score = 0
         self.item_types = ['beer','cocktail','book','pen']
+        self.partytime = True
 
     #----------------------------------------------------------------------
 
@@ -32,3 +33,9 @@ class GameModel(object):
 
         #self.items.append(item)
         #print "Itemsanzahl: " + str(len(self.items))
+
+    def toggle_partytime(self):
+        if self.partytime == True:
+            self.partytime = False
+        else:
+            self.partytime = True
