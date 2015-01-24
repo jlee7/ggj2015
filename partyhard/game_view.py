@@ -82,14 +82,15 @@ class GameView(object):
                     item.kill()
                     #print "item killed, current items in group: " + str(len(self.itemgroup)) 
                     self.game_model.score += 1 
+                    #print "game model score: " + str(self.game_model.score)
+                    self.textlist.remove(self.text_score)
                     self.text_score = self.game_text.get_score_text(self.game_model.score)
+                    self.textlist.append(self.text_score)
 
             # UPDATE SHIT
             #print self.screen
             # self.itemgroup.clear(self.screen,self.background)
             self.update_screen()
-
-
 
 
         elif isinstance(event,SpawnItemEvent):
@@ -113,6 +114,8 @@ class GameView(object):
                 #print event.direction
                 self.dude.moveRight()
 
+    def display_announce_text(self):
+        pass
 
     def update_screen(self):
         self.screen.blit(self.background,(0,0))
@@ -122,15 +125,19 @@ class GameView(object):
         self.screen.blit(self.dude.image, self.dude.position)
         pygame.display.flip()
 
+
+
 class GameText(object):
 
     def __init__(self):
 
         self.font_big = pygame.font.SysFont(None, 72)
-        self.font_score = pygame.font.SysFont(None, 72)
+        self.font_score = pygame.font.SysFont(None, 44)
 
     def get_score_text(self, score):
-        return self.font_score.render("Score: " + str(score), True, (0, 128, 0))
+        score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
+        #print score_text
+        return score_text
 
     def get_announce_text(self):
         return self.font_big.render("Party Hard!", True, (0, 128, 0))
