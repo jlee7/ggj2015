@@ -2,6 +2,7 @@ import pygame
 from item_sprites import *
 from item_models import *
 from event_manager import *
+from dude import *
 
 WIDTH = 1024
 HEIGHT = 680
@@ -29,6 +30,10 @@ class GameView(object):
         self.itemgroup.add(self.demosprite)        
         self.itemgroup.draw(self.screen)
 
+        self.dude = Dude(WIDTH/2,HEIGHT-60)
+        self.screen.blit(self.dude.image, self.dude.position)
+
+
         #self.screen.blit(self.demosprite.image, DEMOSPRITE_POSITION)
 
         pygame.display.flip()
@@ -53,6 +58,25 @@ class GameView(object):
             if isinstance (event.item, BeerModel):
 
                 print "spawning Beer"
+
+        elif isinstance(event, DudeMoveEvent):
+            print "the moves of the dude are in the view!"
+
+            if event.direction == "left":
+                print event.direction
+                self.dude.moveLeft()
+                
+            elif event.direction == "right":
+                print event.direction
+                self.dude.moveRight()
+
+
+
+            self.screen.blit(self.background,(0,0))
+            self.screen.blit(self.dude.image, self.dude.position)
+
+
+
 
 
 

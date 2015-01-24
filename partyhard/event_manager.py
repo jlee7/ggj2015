@@ -42,6 +42,7 @@ class TickEvent(Event):
 class DudeMoveEvent(Event):
     def __init__(self, direction):
         self.name = "Dude Move"
+        self.direction = direction
 
 class SpawnItemEvent(Event):
     def __init__(self, item):
