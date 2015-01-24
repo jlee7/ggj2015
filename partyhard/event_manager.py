@@ -18,7 +18,8 @@ class EventManager(object):
 
     def post(self, event):
         if not isinstance (event, TickEvent):
-            print "Event: " + event.name
+            pass
+            #print "Event: " + event.name
         for listener in self.listeners:
             #print event
             listener.notify(event)

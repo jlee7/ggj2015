@@ -41,7 +41,7 @@ class GameView(object):
 
         self.textgroup = pygame.sprite.Group()
 
-        self.dude = Dude(WIDTH/2,HEIGHT-60)
+        self.dude = Dude(WIDTH/2,HEIGHT-172)
         self.screen.blit(self.dude.image, self.dude.position)
 
 
@@ -74,7 +74,15 @@ class GameView(object):
                 # items falling out of the screen
                 if item.rect.y > HEIGHT:
                     item.kill()
-                    print "item killed, current items in group: " + str(len(self.itemgroup)) 
+                    #print "item killed, current items in group: " + str(len(self.itemgroup)) 
+            
+            collision = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
+            if collision:
+                remove_list = []
+                remove_list.append(collision)
+                print collision
+                for thing in remove_list:
+                    self.itemgroup.remove(thing)
 
             #print self.screen
             self.itemgroup.clear(self.screen,self.background)
@@ -96,14 +104,10 @@ class GameView(object):
                 print "spawning Beer"
 
         elif isinstance(event, DudeMoveEvent):
-            print "the moves of the dude are in the view!"
-
             if event.direction == "left":
-                print event.direction
                 self.dude.moveLeft()
                 
             elif event.direction == "right":
-                print event.direction
                 self.dude.moveRight()
 
 
