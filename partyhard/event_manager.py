@@ -54,3 +54,8 @@ class SpawnItemEvent(Event):
         self.item = item
         self.name = "Spawn Item " + item.__class__.__name__
 
+class CollisionEvent(Event):
+    def __init__(self, item):
+        self.item = item
+        self.name = "CollisionEvent Item " + item.__class__.__name__
+

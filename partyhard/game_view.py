@@ -23,55 +23,31 @@ class GameView(object):
 
     def __init__(self, event_manager, game_model):
 
+        # injects
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
-
         self.game_model = game_model
-
+        # basic screen
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
-
         self.background=pygame.Surface(self.screen.get_size())
         self.background=pygame.image.load(BACKGROUND_IMAGE)
-        #self.background=self.background.convert()
-        #self.background.fill((0,255,0))
         self.screen.blit(self.background,(0,0))
-
-        #self.demosprite = ItemSprite()
-
+        # basic text
         self.game_text = GameText()
-
-        #self.textdict = {'score' : self.game_text.get_score_text()}
-
         self.text_score = self.game_text.get_score_text(self.game_model.score)
         self.mode_text = self.game_text.get_announce_text()
-
         self.textlist = [self.text_score]
         self.modelist = [self.mode_text]
-
+        # groups
         self.itemgroup = pygame.sprite.Group()
-        #self.itemgroup.add(self.demosprite)        
-        #self.itemgroup.draw(self.screen)
-
-
         self.textgroup = pygame.sprite.Group()
-
+        # dude
         self.dude = Dude(WIDTH/2,HEIGHT-172)
-
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
-
-        #self.screen.blit(self.demosprite.image, DEMOSPRITE_POSITION)
-
-        #text_position = text.get_rect()
-
-        #self.textgroup.add(text)
-
-
-        #self.screen.blit(text,(WIDTH/2 - text.get_width()/2, HEIGHT/2 - text.get_height()/2))
-
+        # draw
         pygame.display.flip()
-
+        # sound
         self.game_sound = GameSound()
-
         main_track = self.game_sound.load_main_track()
         #main_track.play(-1)
 
@@ -84,31 +60,21 @@ class GameView(object):
             # falling items
             for item in self.itemgroup:
                 item.rect.y += item.fall_speed
-                # items falling out of the screen
-                if item.rect.y > HEIGHT:
-                    print item, "gone"
+                if item.rect.y > HEIGHT: # items falling out of the screen
                     item.kill()
-                    #print "item killed, current items in group: " + str(len(self.itemgroup)) 
-                
+
                     self.game_model.score += 1 
-                    #print "game model score: " + str(self.game_model.score)
                     self.textlist.remove(self.text_score)
                     self.text_score = self.game_text.get_score_text(self.game_model.score)
                     self.textlist.append(self.text_score)
 
-            collision = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
+            # colliding items
+            collided_item = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
+            if collided_item:
+                self.event_manager.post(CollisionEvent(collided_item))
+                collided_item.kill()
 
-            if collision:
-                print self.dude.rect, collision.rect
-
-                collision.kill()
-                print collision , "killed"
-
-                #for thing in remove_list:
-                #    self.itemgroup.remove(thing)
-
-            #print self.screen
-            # self.itemgroup.clear(self.screen,self.background)
+            # DRAW SHIT
             self.update_screen()
 
 
