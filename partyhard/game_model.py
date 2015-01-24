@@ -20,7 +20,16 @@ class GameModel(object):
             if(event.tick_number % 15 == 0):
                 self.spawn_item()
         elif isinstance (event, CollisionEvent):
-            pass
+            if self.partytime:
+                if event.item.partytime:
+                    self.score += 5
+                else:
+                    self.score -= 5
+            else:
+                if event.item.partytime:
+                    self.score -= 5
+                else:
+                    self.score += 5
 
     def spawn_item(self):
         item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])

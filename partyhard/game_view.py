@@ -38,11 +38,9 @@ class GameView(object):
 
         self.mode_text1 = self.game_text.get_announce_text1()
         self.mode_text2 = self.game_text.get_announce_text2()
-
-
         self.textlist = [self.text_score]
         self.modelist = [self.mode_text1, self.mode_text2]
-
+        # groups
         self.itemgroup = pygame.sprite.Group()
         self.textgroup = pygame.sprite.Group()
         # dude
@@ -67,15 +65,11 @@ class GameView(object):
                 if item.rect.y > HEIGHT: # items falling out of the screen
                     item.kill()
 
-                    self.game_model.score += 1 
-                    self.textlist.remove(self.text_score)
-                    self.text_score = self.game_text.get_score_text(self.game_model.score)
-                    self.textlist.append(self.text_score)
-
             # colliding items
             collided_item = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
             if collided_item:
-                self.event_manager.post(CollisionEvent(collided_item))
+                self.event_manager.post(CollisionEvent(collided_item.item_model))
+                self.update_score()
                 collided_item.kill()
 
             # DRAW SHIT
@@ -109,6 +103,11 @@ class GameView(object):
 
     def display_announce_text(self):
         pass
+
+    def update_score(self):
+        self.textlist.remove(self.text_score)
+        self.text_score = self.game_text.get_score_text(self.game_model.score)
+        self.textlist.append(self.text_score)
 
     def update_screen(self):
         self.screen.blit(self.background,(0,0))
