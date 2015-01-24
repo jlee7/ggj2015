@@ -14,7 +14,7 @@ from game_sound import *
 WIDTH = 1024
 HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
-BACKGROUND_IMAGE = ""
+BACKGROUND_IMAGE = "assets/bg-1.jpg"
 
 #----------------------------------------------------------------------
 
@@ -28,8 +28,9 @@ class GameView(object):
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
 
         self.background=pygame.Surface(self.screen.get_size())
-        self.background=self.background.convert()
-        self.background.fill((0,255,0))
+        self.background=pygame.image.load(BACKGROUND_IMAGE)
+        #self.background=self.background.convert()
+        #self.background.fill((0,255,0))
         self.screen.blit(self.background,(0,0))
 
         #self.demosprite = ItemSprite()
