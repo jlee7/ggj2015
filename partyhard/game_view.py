@@ -82,8 +82,11 @@ class GameView(object):
             collided_item = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
             if collided_item:
                 self.event_manager.post(CollisionEvent(collided_item.item_model))
+                self.dude.raise_arms()
                 self.update_score()
                 collided_item.kill()
+            else:
+                self.dude.lower_arms()
             # DRAW SHIT
             if self.game_model.state is not GameModel.STATE_PAUSED:            
                 self.update_screen()

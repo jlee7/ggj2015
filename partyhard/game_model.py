@@ -2,8 +2,8 @@ from event_manager import *
 from item_models import *
 import random
 
-SCORE_POSITIV_CATCH = 5
-SCORE_NEGATIVE_CATCH = 10
+SCORE_POSITIV_CATCH = 10
+SCORE_NEGATIVE_CATCH = 5
 
 #----------------------------------------------------------------------
 
