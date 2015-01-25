@@ -13,6 +13,7 @@ class EventManager(object):
     #----------------------------------------------------------------------
 
     def register_listener(self, listener):
+        #print listener
         self.listeners[listener] = True
 
     #----------------------------------------------------------------------
@@ -28,7 +29,7 @@ class EventManager(object):
             self.last_tick = event.tick_number
 
         for listener in self.listeners:
-            #print event
+            #print event, listener
             listener.notify(event)
 
     #----------------------------------------------------------------------

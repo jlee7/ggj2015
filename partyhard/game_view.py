@@ -18,9 +18,13 @@ DEMOSPRITE_POSITION = [300, 500]
 BACKGROUND_PARTYTIME = "assets/bg-1.jpg"
 BACKGROUND_STUDYTIME = "assets/bg_dummy_studytime.jpg"
 
+
+
 #----------------------------------------------------------------------
 
 class GameView(object):
+
+    first_startup = True
 
     def __init__(self, event_manager, game_model):
 
@@ -30,6 +34,7 @@ class GameView(object):
         self.game_model = game_model
         # flags
         self.game_over_screen = False
+        self.game_start_screen = False
         self.partytime = True # man braucht hier leider ein eigenen party time flag
         # basic screen
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -54,8 +59,7 @@ class GameView(object):
         # dude
         self.dude = Dude(WIDTH/2,HEIGHT-172)
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
-        # draw
-        pygame.display.flip()
+
         # sound
         self.game_sound = GameSound()
         self.party_track = self.game_sound.load_party_track()
@@ -67,6 +71,11 @@ class GameView(object):
         self.item_fall_speed_modifier_studytime = 1.6
         self.item_fall_speed_modifier_factor = 1.3
         self.item_fall_speed_modifier = self.item_fall_speed_modifier_partytime
+        # Startup
+        if self.first_startup:
+            self.show_startup()
+        # draw
+        pygame.display.flip()
 
     #---------------------------------------------------------------------- 
 
@@ -91,7 +100,7 @@ class GameView(object):
             # DRAW SHIT
             if self.game_model.state is not GameModel.STATE_PAUSED:            
                 self.update_screen()
-            elif not self.game_over_screen:
+            elif not self.game_over_screen and not self.game_start_screen:
                 self.show_game_over()
                 self.game_over_screen = True
 
@@ -150,6 +159,14 @@ class GameView(object):
             self.game_sound.stop_all_sounds()
             self.game_paused_track.play(-1)
 
+
+    def show_startup(self):
+        self.game_model.state = GameModel.STATE_PAUSED
+        game_start_sprite = pygame.sprite.Sprite()
+        game_start_sprite.image = pygame.image.load("assets/press_to_play.jpg")
+        self.screen.blit(game_start_sprite.image,(100,100))
+        self.game_start_screen = True
+        self.first_startup = False
 
     def flip_partytime(self):
         if self.partytime == True:
