@@ -62,8 +62,10 @@ class GameView(object):
         self.game_over_screen = False
         self.partytime = True # man braucht hier leider ein eigenen party time flag
         # parameters
-        self.item_fall_speed_modifier = 1.0
-
+        self.item_fall_speed_modifier_partytime = 1.0
+        self.item_fall_speed_modifier_studytime = 1.6
+        self.item_fall_speed_modifier_factor = 1.3
+        self.item_fall_speed_modifier = self.item_fall_speed_modifier_partytime
 
     #---------------------------------------------------------------------- 
 
@@ -123,13 +125,15 @@ class GameView(object):
                 self.modetext = self.modelist[0]
                 self.study_track.stop()
                 self.party_track.play(-1)
-                self.item_fall_speed_modifier = 1.0
+                self.item_fall_speed_modifier = self.item_fall_speed_modifier_partytime
+                self.item_fall_speed_modifier_studytime = (self.item_fall_speed_modifier_studytime 
+                                                            * self.item_fall_speed_modifier_factor)
             else:
                 self.background = pygame.image.load(BACKGROUND_STUDYTIME)
                 self.modetext = self.modelist[1]
                 self.party_track.stop()
                 self.study_track.play(-1)
-                self.item_fall_speed_modifier = 1.6
+                self.item_fall_speed_modifier = self.item_fall_speed_modifier_studytime
             self.itemgroup.update(self.partytime)
 
 

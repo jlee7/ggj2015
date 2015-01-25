@@ -25,7 +25,7 @@ class GameModel(object):
 
     def notify(self, event):
         if isinstance (event, TickEvent):
-            if(event.tick_number % 15 == 0):
+            if(event.tick_number % random.randrange(3,15) == 0):
                 self.spawn_item()
         elif isinstance (event, CollisionEvent):
             if self.partytime:
