@@ -245,10 +245,10 @@ class GameView(object):
         self.itemgroup.draw(self.screen)
         #Punkteanzeige
         for text in self.textlist:
-            self.screen.blit(text,(0,0))
+            self.screen.blit(text,(20,20))
         #Modusanzeige
-        self.screen.blit(self.modetext, (700, 0))
-        self.screen.blit(self.text_time, (400, 0))
+        self.screen.blit(self.modetext, (720, 20))
+        self.screen.blit(self.text_time, (400, 20))
 
         #pygame.draw.rect(self.screen, (255, 0, 0), [20,20,20,20], 3)
 
@@ -260,26 +260,26 @@ class GameText(object):
 
     def __init__(self):
 
-        self.font_big = pygame.font.SysFont(None, 72)
-        self.font_score = pygame.font.SysFont(None, 44)
-        self.font_game_over_headline = pygame.font.SysFont(None, 122)
-        self.font_time = pygame .font.SysFont(None, 44)
+        self.font_big = pygame.font.Font("assets/JOKERMAN.TTF", 44) # Modus
+        self.font_score = pygame.font.Font("assets/JOKERMAN.TTF", 25) # Punkte
+        self.font_game_over_headline = pygame.font.Font("assets/JOKERMAN.TTF", 122)
+        self.font_time = pygame .font.Font("assets/JOKERMAN.TTF", 25) # Zeit
 
     def get_score_text(self, score):
-        score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
+        score_text = self.font_score.render("Score: " + str(score), True, (255, 255, 255))
         return score_text
 
     def get_time(self, time):
-        time_text = self.font_time.render("Time: " + str(time), True, (0, 128, 0))
+        time_text = self.font_time.render("Time: " + str(time), True, (255, 255, 255))
         return time_text
 
     def get_announce_text1(self):
-        return self.font_big.render("Party Hard!", True, (0, 128, 0))
+        return self.font_big.render("Party Hard!", True, (255, 0, 0))
 
     def get_announce_text2(self):
-        return self.font_big.render("Study Time!", True, (0, 128, 0))
+        return self.font_big.render("Study Time!", True, (0, 0, 255))
 
     def get_game_over_headline(self):
-        return self.font_game_over_headline.render("GAME OVER", True, (0, 128, 0))
+        return self.font_game_over_headline.render("GAME OVER", True, (128, 128, 128))
         return score_text
 
