@@ -3,6 +3,7 @@ Fonts: http://www.nerdparadise.com/tech/python/pygame/basics/part5/
 '''
 
 import pygame
+import random
 from item_sprites import *
 from item_models import *
 from event_manager import *
@@ -162,7 +163,14 @@ class GameView(object):
             self.sound_yeah.play()
 
         elif isinstance(event, ItemCatchNegative):
-            self.sound_no.play()
+            randomnumber = random.randrange(0,3)
+            print randomnumber
+            if randomnumber == 0:
+                self.sound_no.play()
+            elif randomnumber == 1:
+                self.sound_no2.play()
+            elif randomnumber == 2:
+                self.sound_mmmh.play()
 
     def flip_partytime(self):
         if self.partytime == True:

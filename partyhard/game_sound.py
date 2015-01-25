@@ -47,12 +47,12 @@ class GameSound(object):
         return sound
 
     def load_sound_partytime(self):
-        sound = pygame.mixer.Sound("assets/partytime.wav")
+        sound = pygame.mixer.Sound("assets/partytime_beat.wav")
         self.sounds.append(sound)
         return sound
 
     def load_sound_studytime(self):
-        sound = pygame.mixer.Sound("assets/studytime.wav")
+        sound = pygame.mixer.Sound("assets/studytime_chimes.wav")
         self.sounds.append(sound)
         return sound
 
