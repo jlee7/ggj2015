@@ -74,3 +74,11 @@ class StopGameEvent(Event):
 class RestartGameEvent(Event):
     def __init__(self):
         self.name = "Restart Game"
+
+class ItemCatchPositive(Event):
+    def __init__(self):
+        self.name = "Positive Item Catch"
+
+class ItemCatchNegative(Event):
+    def __init__(self):
+        self.name = "Negative Item Catch"

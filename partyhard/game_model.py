@@ -45,13 +45,17 @@ class GameModel(object):
         if self.partytime:
             if event.item.partytime:
                 self.score += SCORE_POSITIV_CATCH
+                self.event_manager.post(ItemCatchPositive())
             else:
                 self.score -= SCORE_NEGATIVE_CATCH
+                self.event_manager.post(ItemCatchNegative())
         else:
             if event.item.partytime:
                 self.score -= SCORE_NEGATIVE_CATCH
+                self.event_manager.post(ItemCatchNegative())
             else:
                 self.score += SCORE_POSITIV_CATCH
+                self.event_manager.post(ItemCatchPositive())
 
     def flip_partytime(self):
         if self.partytime == True:

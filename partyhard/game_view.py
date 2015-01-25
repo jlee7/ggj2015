@@ -59,13 +59,26 @@ class GameView(object):
         # dude
         self.dude = Dude(WIDTH/2,HEIGHT-172)
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
-
-        # sound
+        # draw
+        pygame.display.flip()
+        # sound - tracks
         self.game_sound = GameSound()
         self.party_track = self.game_sound.load_party_track()
         self.party_track.play(-1)
         self.study_track = self.game_sound.load_study_track()
         self.game_paused_track = self.game_sound.load_game_paused_track()
+        # sound - action sounds
+        self.sound_mmmh = self.game_sound.load_sound_mmmh()
+        self.sound_no = self.game_sound.load_sound_no()
+        self.sound_no2 = self.game_sound.load_sound_no2()
+        self.sound_partyhard = self.game_sound.load_sound_partyhard()
+        self.sound_partytime = self.game_sound.load_sound_partytime()
+        self.sound_studytime = self.game_sound.load_sound_studytime()
+        self.sound_whatdowedonow = self.game_sound.load_sound_whatdowedonow()
+        self.sound_yeah = self.game_sound.load_sound_yeah()
+        # flags
+        self.game_over_screen = False
+        self.partytime = True # man braucht hier leider ein eigenen party time flag
         # parameters
         self.item_fall_speed_modifier_partytime = 1.0
         self.item_fall_speed_modifier_studytime = 1.6
@@ -138,6 +151,7 @@ class GameView(object):
                 self.modetext = self.modelist[0]
                 self.study_track.stop()
                 self.party_track.play(-1)
+                self.sound_partytime.play()
                 self.item_fall_speed_modifier = self.item_fall_speed_modifier_partytime
                 self.item_fall_speed_modifier_studytime = (self.item_fall_speed_modifier_studytime 
                                                             * self.item_fall_speed_modifier_factor)
@@ -146,6 +160,7 @@ class GameView(object):
                 self.modetext = self.modelist[1]
                 self.party_track.stop()
                 self.study_track.play(-1)
+                self.sound_studytime.play()
                 self.item_fall_speed_modifier = self.item_fall_speed_modifier_studytime
             self.itemgroup.update(self.partytime)
 
@@ -159,6 +174,11 @@ class GameView(object):
             self.game_sound.stop_all_sounds()
             self.game_paused_track.play(-1)
 
+        elif isinstance(event, ItemCatchPositive):
+            self.sound_yeah.play()
+
+        elif isinstance(event, ItemCatchNegative):
+            self.sound_no.play()
 
     def show_startup(self):
         self.game_model.state = GameModel.STATE_PAUSED
