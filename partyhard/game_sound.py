@@ -65,8 +65,9 @@ class GameSound(object):
         return sound
 
     def load_sound_studytime(self):
-        sound = pygame.mixer.Sound("assets/studytime.wav")
-        sound.set_volume(0.9)
+        #sound = pygame.mixer.Sound("assets/studytime.wav")
+        sound = pygame.mixer.Sound("assets/studytime_dis.wav")
+        sound.set_volume(1)
         self.sounds.append(sound)
         return sound
 

@@ -191,7 +191,7 @@ class GameView(object):
 
         elif isinstance(event, ItemCatchNegative):
             randomnumber = random.randrange(0,3)
-            print randomnumber
+            #print randomnumber
             if randomnumber == 0:
                 self.sound_no.play()
             elif randomnumber == 1:
@@ -200,10 +200,12 @@ class GameView(object):
                 self.sound_mmmh.play()
 
     def show_startup(self):
+        self.party_track.stop()
+        self.game_paused_track.play(-1)
         self.game_model.state = GameModel.STATE_PAUSED
         game_start_sprite = pygame.sprite.Sprite()
-        game_start_sprite.image = pygame.image.load("assets/press_to_play.jpg")
-        self.screen.blit(game_start_sprite.image,(100,100))
+        game_start_sprite.image = pygame.image.load("assets/splash-screen.png")
+        self.screen.blit(game_start_sprite.image,(0,0))
         self.game_start_screen = True
         self.first_startup = False
 
@@ -238,9 +240,9 @@ class GameView(object):
         box.blit(text_game_over_headline, (0, 0))
         '''
         game_over_sprite = pygame.sprite.Sprite()
-        game_over_sprite.image = pygame.image.load("assets/img-tor_game_over_man.png")
+        game_over_sprite.image = pygame.image.load("assets/end-screen.png")
         # Draw
-        self.screen.blit(game_over_sprite.image,(100,100))
+        self.screen.blit(game_over_sprite.image,(0,0))
 
         pygame.display.flip()
 
