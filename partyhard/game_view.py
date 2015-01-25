@@ -230,32 +230,35 @@ class GameView(object):
     def show_game_over(self):
 
         '''
-        # Box
-        box = pygame.Surface((600,500))
-        box.set_alpha(128)
-        box.fill((255, 0, 0))
-
         # Text
         text_game_over_headline = self.game_text.get_game_over_headline()
         box.blit(text_game_over_headline, (0, 0))
         '''
         game_over_sprite = pygame.sprite.Sprite()
         game_over_sprite.image = pygame.image.load("assets/end-screen.png")
+        self.textlist.remove(self.text_score)
         # Draw
         self.screen.blit(game_over_sprite.image,(0,0))
 
         pygame.display.flip()
 
     def update_screen(self):
+
+        box = pygame.Surface((1024,75))
+        box.set_alpha(128)
+        box.fill((0, 0, 0))
         
         self.screen.blit(self.background,(0,0))
+
+
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
         self.itemgroup.draw(self.screen)
+        self.screen.blit(box, (0, 0))
         #Punkteanzeige
         for text in self.textlist:
             self.screen.blit(text,(20,20))
         #Modusanzeige
-        self.screen.blit(self.modetext, (720, 20))
+        self.screen.blit(self.modetext, (720, 0))
         self.screen.blit(self.text_time, (400, 20))
 
         #pygame.draw.rect(self.screen, (255, 0, 0), [20,20,20,20], 3)
