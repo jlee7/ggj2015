@@ -61,6 +61,7 @@ class GameView(object):
         self.party_track = self.game_sound.load_party_track()
         self.party_track.play(-1)
         self.study_track = self.game_sound.load_study_track()
+        self.game_paused_track = self.game_sound.load_game_paused_track()
         # parameters
         self.item_fall_speed_modifier_partytime = 1.0
         self.item_fall_speed_modifier_studytime = 1.6
@@ -144,6 +145,12 @@ class GameView(object):
             self.game_sound.stop_all_sounds()
             self.__init__(self.event_manager, self.game_model)
 
+        # Game Over
+        elif isinstance(event, StopGameEvent):
+            self.game_sound.stop_all_sounds()
+            self.game_paused_track.play(-1)
+
+
     def flip_partytime(self):
         if self.partytime == True:
             self.partytime = False
@@ -159,6 +166,8 @@ class GameView(object):
         self.textlist.append(self.text_score)
 
     def show_game_over(self):
+
+        '''
         # Box
         box = pygame.Surface((600,500))
         box.set_alpha(128)
@@ -167,9 +176,12 @@ class GameView(object):
         # Text
         text_game_over_headline = self.game_text.get_game_over_headline()
         box.blit(text_game_over_headline, (0, 0))
-
+        '''
+        game_over_sprite = pygame.sprite.Sprite()
+        game_over_sprite.image = pygame.image.load("assets/img-tor_game_over_man.png")
         # Draw
-        self.screen.blit(box,(200,100))
+        self.screen.blit(game_over_sprite.image,(100,100))
+
         pygame.display.flip()
 
     def update_screen(self):
