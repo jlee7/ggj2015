@@ -14,13 +14,18 @@ class GameSound(object):
 
     #----------------------------------------------------------------------
 
+    def load_game_paused_track(self):
+        sound = pygame.mixer.Sound("assets/dream.WAV")
+        self.sounds.append(sound)
+        return sound
+
     def load_party_track(self):
         sound = pygame.mixer.Sound("assets/rock2.WAV")
         self.sounds.append(sound)
         return sound
 
     def load_study_track(self):
-        #sound = pygame.mixer.Sound("assets/dream.WAV")
+
     	sound = pygame.mixer.Sound("assets/rock.WAV")
         self.sounds.append(sound)
         return sound

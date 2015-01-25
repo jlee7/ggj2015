@@ -12,12 +12,13 @@ clock = pygame.time.Clock()
 
 class TimeController(object):
 
+    keep_running = False
+
     def __init__(self, event_manager):
         self.tick_number = 0
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
         self.game_time = 0
-        self.keep_running = True
         self.next_switch_tick = self.get_next_switch_delay()
 
     #----------------------------------------------------------------------
@@ -26,6 +27,8 @@ class TimeController(object):
         while True:
 
             clock.tick(tick_speed)
+
+            #print self.tick_number
 
             if self.keep_running:
 
@@ -47,6 +50,15 @@ class TimeController(object):
             self.event_manager.post(event)
 
     #----------------------------------------------------------------------
+
+    def notify(self, event):
+        #print "event received"
+        if isinstance (event, RestartGameEvent):
+            #print "timer restart"
+            self.__init__(self.event_manager)
+            self.keep_running = True
+
+    #----------------------------------------------------------------------
     
     def get_next_switch_delay(self):
         return random.randrange(200, 300)
@@ -58,5 +70,3 @@ class TimeController(object):
     def get_countdown_time(self):
         return (GAME_LENGTH_SEC - (self.game_time / 1000))
 
-    def notify(self, event):
-        pass

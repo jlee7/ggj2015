@@ -19,9 +19,13 @@ DEMOSPRITE_POSITION = [300, 500]
 BACKGROUND_PARTYTIME = "assets/bg-1.jpg"
 BACKGROUND_STUDYTIME = "assets/bg_dummy_studytime.jpg"
 
+
+
 #----------------------------------------------------------------------
 
 class GameView(object):
+
+    first_startup = True
 
     def __init__(self, event_manager, game_model):
 
@@ -31,6 +35,7 @@ class GameView(object):
         self.game_model = game_model
         # flags
         self.game_over_screen = False
+        self.game_start_screen = False
         self.partytime = True # man braucht hier leider ein eigenen party time flag
         # basic screen
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -62,6 +67,7 @@ class GameView(object):
         self.party_track = self.game_sound.load_party_track()
         self.party_track.play(-1)
         self.study_track = self.game_sound.load_study_track()
+        self.game_paused_track = self.game_sound.load_game_paused_track()
         # sound - action sounds
         self.sound_mmmh = self.game_sound.load_sound_mmmh()
         self.sound_no = self.game_sound.load_sound_no()
@@ -79,6 +85,11 @@ class GameView(object):
         self.item_fall_speed_modifier_studytime = 1.6
         self.item_fall_speed_modifier_factor = 1.3
         self.item_fall_speed_modifier = self.item_fall_speed_modifier_partytime
+        # Startup
+        if self.first_startup:
+            self.show_startup()
+        # draw
+        pygame.display.flip()
 
     #---------------------------------------------------------------------- 
 
@@ -103,7 +114,7 @@ class GameView(object):
             # DRAW SHIT
             if self.game_model.state is not GameModel.STATE_PAUSED:            
                 self.update_screen()
-            elif not self.game_over_screen:
+            elif not self.game_over_screen and not self.game_start_screen:
                 self.show_game_over()
                 self.game_over_screen = True
 
@@ -159,6 +170,11 @@ class GameView(object):
             self.game_sound.stop_all_sounds()
             self.__init__(self.event_manager, self.game_model)
 
+        # Game Over
+        elif isinstance(event, StopGameEvent):
+            self.game_sound.stop_all_sounds()
+            self.game_paused_track.play(-1)
+
         elif isinstance(event, ItemCatchPositive):
             self.sound_yeah.play()
 
@@ -171,6 +187,14 @@ class GameView(object):
                 self.sound_no2.play()
             elif randomnumber == 2:
                 self.sound_mmmh.play()
+
+    def show_startup(self):
+        self.game_model.state = GameModel.STATE_PAUSED
+        game_start_sprite = pygame.sprite.Sprite()
+        game_start_sprite.image = pygame.image.load("assets/press_to_play.jpg")
+        self.screen.blit(game_start_sprite.image,(100,100))
+        self.game_start_screen = True
+        self.first_startup = False
 
     def flip_partytime(self):
         if self.partytime == True:
@@ -187,6 +211,8 @@ class GameView(object):
         self.textlist.append(self.text_score)
 
     def show_game_over(self):
+
+        '''
         # Box
         box = pygame.Surface((600,500))
         box.set_alpha(128)
@@ -195,9 +221,12 @@ class GameView(object):
         # Text
         text_game_over_headline = self.game_text.get_game_over_headline()
         box.blit(text_game_over_headline, (0, 0))
-
+        '''
+        game_over_sprite = pygame.sprite.Sprite()
+        game_over_sprite.image = pygame.image.load("assets/img-tor_game_over_man.png")
         # Draw
-        self.screen.blit(box,(200,100))
+        self.screen.blit(game_over_sprite.image,(100,100))
+
         pygame.display.flip()
 
     def update_screen(self):
