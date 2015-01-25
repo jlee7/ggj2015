@@ -23,6 +23,8 @@ class EventManager(object):
         if (not isinstance (event, TickEvent) 
             and not isinstance (event, DudeMoveEvent) 
             and not isinstance (event, CollisionEvent) 
+            and not isinstance (event, ItemCatchPositive) 
+            and not isinstance (event, ItemCatchNegative) 
             and not isinstance (event, SpawnItemEvent)):
             print "Event: " + event.name + " (" + str(self.last_tick) + ")"
         elif isinstance (event, TickEvent):

@@ -15,6 +15,9 @@ BOOK_IMAGE_RED = "assets/item-book_red.png"
 LAPTOP_IMAGE = "assets/item-laptop.png"
 LAPTOP_IMAGE_GREEN = "assets/item-laptop_green.png"
 LAPTOP_IMAGE_RED = "assets/item-laptop_red.png"
+POINT_PLUS_IMAGE = "assets/score_plus.png"
+POINT_MINUS_IMAGE = "assets/score_minus.png"
+KILL_TIME = 5
 
 #----------------------------------------------------------------------
 
@@ -26,16 +29,36 @@ class ItemSprite(pygame.sprite.Sprite):
         #self.rect = self.image.get_rect()
         self.fall_speed = randint(4,8)
         self.item_model = model
+        self.collided = False
+        self.kill_time = KILL_TIME
+
     def update(self, partytime):
-        if ((partytime == True and self.item_model.partytime == True) 
+        if (not self.collided
+            and (partytime == True and self.item_model.partytime == True) 
             or (partytime == False and self.item_model.partytime == False)):
             self.set_positiv()
         else:
             self.set_negativ()
+
     def set_positiv(self):
         pass
     def set_negativ(self):
         pass
+
+    def collide(self, partytime):
+        if ((partytime == True and self.item_model.partytime == True) 
+            or (partytime == False and self.item_model.partytime == False)):
+            self.image = pygame.image.load(POINT_PLUS_IMAGE)
+        else:
+            self.image = pygame.image.load(POINT_MINUS_IMAGE)
+        self.collided = True
+
+    def kill_try(self):
+        self.kill_time -=1
+        if self.kill_time == 0:
+            self.kill()
+
+
 #----------------------------------------------------------------------
 
 class BeerSprite(ItemSprite):
