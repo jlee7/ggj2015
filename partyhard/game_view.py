@@ -140,6 +140,7 @@ class GameView(object):
                 self.modetext = self.modelist[0]
                 self.study_track.stop()
                 self.party_track.play(-1)
+                self.sound_partytime.play()
                 self.item_fall_speed_modifier = self.item_fall_speed_modifier_partytime
                 self.item_fall_speed_modifier_studytime = (self.item_fall_speed_modifier_studytime 
                                                             * self.item_fall_speed_modifier_factor)
@@ -148,6 +149,7 @@ class GameView(object):
                 self.modetext = self.modelist[1]
                 self.party_track.stop()
                 self.study_track.play(-1)
+                self.sound_studytime.play()
                 self.item_fall_speed_modifier = self.item_fall_speed_modifier_studytime
             self.itemgroup.update(self.partytime)
 
@@ -155,6 +157,12 @@ class GameView(object):
         elif isinstance(event, RestartGameEvent):
             self.game_sound.stop_all_sounds()
             self.__init__(self.event_manager, self.game_model)
+
+        elif isinstance(event, ItemCatchPositive):
+            self.sound_yeah.play()
+
+        elif isinstance(event, ItemCatchNegative):
+            self.sound_no.play()
 
     def flip_partytime(self):
         if self.partytime == True:
