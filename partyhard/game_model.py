@@ -19,7 +19,7 @@ class GameModel(object):
         self.items = []
         self.score = 0
         self.partytime = True
-        self.state = GameModel.STATE_PREPARING
+        self.state = self.STATE_RUNNING
 
     #----------------------------------------------------------------------
 
@@ -28,26 +28,29 @@ class GameModel(object):
             if(event.tick_number % random.randrange(3,15) == 0):
                 self.spawn_item()
         elif isinstance (event, CollisionEvent):
-            if self.partytime:
-                if event.item.partytime:
-                    self.score += SCORE_POSITIV_CATCH
-                else:
-                    self.score -= SCORE_NEGATIVE_CATCH
-            else:
-                if event.item.partytime:
-                    self.score -= SCORE_NEGATIVE_CATCH
-                else:
-                    self.score += SCORE_POSITIV_CATCH
+            self.grant_score(event)
         elif isinstance (event, PartyTimeSwitch):
-            if self.partytime == True:
-                self.partytime = False
-            else:
-                self.partytime = True
-            print "partytime: " + str(self.partytime)
+            self.flip_partytime()
         elif isinstance(event, StopGameEvent):
-            pass
+            self.state = self.STATE_PAUSED
 
+    def grant_score(self, event):
+        if self.partytime:
+            if event.item.partytime:
+                self.score += SCORE_POSITIV_CATCH
+            else:
+                self.score -= SCORE_NEGATIVE_CATCH
+        else:
+            if event.item.partytime:
+                self.score -= SCORE_NEGATIVE_CATCH
+            else:
+                self.score += SCORE_POSITIV_CATCH
 
+    def flip_partytime(self):
+        if self.partytime == True:
+            self.partytime = False
+        else:
+            self.partytime = True
 
     def spawn_item(self):
         item_model = random.choice([BeerModel(self),CocktailModel(self),BookModel(self),PenModel(self)])

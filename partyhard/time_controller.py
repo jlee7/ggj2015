@@ -29,7 +29,7 @@ class TimeController(object):
 
             # End Game Event
             if self.game_time > GAME_LENGTH:
-                #self.event_manager.post(StopGameEvent())
+                self.event_manager.post(StopGameEvent())
                 pass
 
             # Switch game modes 
