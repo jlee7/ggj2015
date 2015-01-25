@@ -2,7 +2,7 @@ from event_manager import *
 import pygame
 import random
 
-GAME_LENGTH_SEC = 10
+GAME_LENGTH_SEC = 30
 GAME_LENGTH = GAME_LENGTH_SEC * 1000
 tick_speed = 30 # framerate
 
@@ -16,7 +16,7 @@ class TimeController(object):
         self.tick_number = 0
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
-        self.game_time = 0.0
+        self.game_time = 0
         self.keep_running = True
         self.next_switch_tick = self.get_next_switch_delay()
 
@@ -27,14 +27,18 @@ class TimeController(object):
 
             clock.tick(tick_speed)
 
-            # End Game Event
-            if self.game_time > GAME_LENGTH:
-                self.event_manager.post(StopGameEvent())
-                pass
+            if self.keep_running:
 
-            # Switch game modes 
-            if self.tick_number == self.next_switch_tick:
-               self.party_time_switch()
+                #print self.get_countdown_time()
+
+                # End Game Event
+                if self.game_time > GAME_LENGTH:
+                    self.event_manager.post(StopGameEvent())
+                    self.keep_running = False
+
+                # Switch game modes 
+                if self.tick_number == self.next_switch_tick:
+                   self.party_time_switch()
 
             # Tick Event
             self.tick_number += 1
