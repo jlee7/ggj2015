@@ -2,7 +2,7 @@ from event_manager import *
 import pygame
 import random
 
-GAME_LENGTH_SEC = 7
+GAME_LENGTH_SEC = 30
 GAME_LENGTH = GAME_LENGTH_SEC * 1000
 tick_speed = 30 # framerate
 
