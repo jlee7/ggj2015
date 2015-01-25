@@ -53,11 +53,20 @@ class GameView(object):
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
         # draw
         pygame.display.flip()
-        # sound
+        # sound - tracks
         self.game_sound = GameSound()
         self.party_track = self.game_sound.load_party_track()
         self.party_track.play(-1)
         self.study_track = self.game_sound.load_study_track()
+        # sound - action sounds
+        self.sound_mmmh = self.game_sound.load_sound_mmmh()
+        self.sound_no = self.game_sound.load_sound_no()
+        self.sound_no2 = self.game_sound.load_sound_no2()
+        self.sound_partyhard = self.game_sound.load_sound_partyhard()
+        self.sound_partytime = self.game_sound.load_sound_partytime()
+        self.sound_studytime = self.game_sound.load_sound_studytime()
+        self.sound_whatdowedonow = self.game_sound.load_sound_whatdowedonow()
+        self.sound_yeah = self.game_sound.load_sound_yeah()
         # flags
         self.game_over_screen = False
         self.partytime = True # man braucht hier leider ein eigenen party time flag
