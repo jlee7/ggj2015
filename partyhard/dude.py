@@ -2,7 +2,7 @@ import pygame
 from pygame.locals import *
 
 #DUDE_IMAGE = "assets/party-dude-155-171.png"
-DUDE_SPEED = 30
+DUDE_SPEED = 20
 DUDE_IMAGE = "assets/party-dude-hands-up.png"
 
 class Dude(pygame.sprite.Sprite):

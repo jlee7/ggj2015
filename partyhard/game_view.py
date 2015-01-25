@@ -60,7 +60,9 @@ class GameView(object):
         self.study_track = self.game_sound.load_study_track()
         # flags
         self.game_over_screen = False
-
+        self.partytime = True # man braucht hier leider ein eigenen party time flag
+        # parameters
+        self.item_fall_speed_modifier = 1.0
 
 
     #---------------------------------------------------------------------- 
@@ -71,7 +73,7 @@ class GameView(object):
         if isinstance(event,TickEvent):
             # falling items
             for item in self.itemgroup:
-                item.rect.y += item.fall_speed
+                item.rect.y += item.fall_speed * self.item_fall_speed_modifier
                 if item.rect.y > HEIGHT: # items falling out of the screen
                     item.kill()
             # colliding items
@@ -91,18 +93,18 @@ class GameView(object):
         # Spawn Event
         elif isinstance(event,SpawnItemEvent):
             if isinstance (event.item, BeerModel):
-                sprite = BeerSprite(event.item)
+                sprite = BeerSprite(event.item, self.partytime)
             elif isinstance (event.item, CocktailModel):
-                sprite = CocktailSprite(event.item)
+                sprite = CocktailSprite(event.item, self.partytime)
             elif isinstance (event.item, BookModel):
-                sprite = BookSprite(event.item)
+                sprite = BookSprite(event.item, self.partytime)
             elif isinstance (event.item, PenModel):
-                sprite = PenSprite(event.item)
+                sprite = PenSprite(event.item, self.partytime)
             if sprite:
                 sprite.rect.x = randint(0,WIDTH)
                 self.itemgroup.add(sprite)
 
-        # Spawn Event
+        # Move Event
         elif isinstance(event, DudeMoveEvent):
             if event.direction == "left":
                 #print event.direction
@@ -113,20 +115,29 @@ class GameView(object):
 
         # Toggle Party Time
         elif isinstance(event, PartyTimeSwitch):
-            if self.game_model.partytime == True:
+
+            self.flip_partytime()
+
+            if self.partytime == True:
                 self.background = pygame.image.load(BACKGROUND_PARTYTIME)
                 self.modetext = self.modelist[0]
                 self.study_track.stop()
                 self.party_track.play(-1)
+                self.item_fall_speed_modifier = 1.0
             else:
                 self.background = pygame.image.load(BACKGROUND_STUDYTIME)
                 self.modetext = self.modelist[1]
                 self.party_track.stop()
                 self.study_track.play(-1)
+                self.item_fall_speed_modifier = 1.6
+            self.itemgroup.update(self.partytime)
 
 
-
-
+    def flip_partytime(self):
+        if self.partytime == True:
+            self.partytime = False
+        else:
+            self.partytime = True
 
     def display_announce_text(self):
         pass

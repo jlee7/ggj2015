@@ -19,5 +19,6 @@ class GameSound(object):
         return sound
 
     def load_study_track(self):
-    	sound = pygame.mixer.Sound("assets/dream.WAV")
+        #sound = pygame.mixer.Sound("assets/dream.WAV")
+    	sound = pygame.mixer.Sound("assets/rock.WAV")
     	return sound

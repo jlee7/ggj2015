@@ -2,6 +2,9 @@ from event_manager import *
 from item_models import *
 import random
 
+SCORE_POSITIV_CATCH = 5
+SCORE_NEGATIVE_CATCH = 10
+
 #----------------------------------------------------------------------
 
 class GameModel(object):
@@ -26,28 +29,29 @@ class GameModel(object):
                 self.spawn_item()
         elif isinstance (event, CollisionEvent):
             if self.partytime:
-                print "PARTEEEEEEEEEEY"
                 if event.item.partytime:
-                    self.score += 5
+                    self.score += SCORE_POSITIV_CATCH
                 else:
-                    self.score -= 5
+                    self.score -= SCORE_NEGATIVE_CATCH
             else:
                 if event.item.partytime:
-                    self.score -= 5
+                    self.score -= SCORE_NEGATIVE_CATCH
                 else:
-                    self.score += 5
+                    self.score += SCORE_POSITIV_CATCH
         elif isinstance (event, PartyTimeSwitch):
             if self.partytime == True:
                 self.partytime = False
             else:
                 self.partytime = True
+            print "partytime: " + str(self.partytime)
         elif isinstance(event, StopGameEvent):
             pass
 
 
 
     def spawn_item(self):
-        item_model = random.choice([BeerModel(),CocktailModel(),BookModel(),PenModel()])
+        item_model = random.choice([BeerModel(self),CocktailModel(self),BookModel(self),PenModel(self)])
+        #item_model = random.choice([BeerModel(self)])
         self.event_manager.post(SpawnItemEvent(item_model))
 
         

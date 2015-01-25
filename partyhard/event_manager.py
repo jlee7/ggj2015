@@ -19,7 +19,10 @@ class EventManager(object):
 
     def post(self, event):
 
-        if not isinstance (event, TickEvent) and not isinstance (event, DudeMoveEvent):
+        if (not isinstance (event, TickEvent) 
+            and not isinstance (event, DudeMoveEvent) 
+            and not isinstance (event, CollisionEvent) 
+            and not isinstance (event, SpawnItemEvent)):
             print "Event: " + event.name + " (" + str(self.last_tick) + ")"
         elif isinstance (event, TickEvent):
             self.last_tick = event.tick_number

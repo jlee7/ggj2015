@@ -22,7 +22,8 @@ class KeyboardController(object):
                         self.keys[1]=True
                     elif event.key ==pygame.K_m:
                         #self.controlkeys[0]=True
-                        self.evManager.post(PartyTimeSwitch())
+                        #self.evManager.post(PartyTimeSwitch())
+                        pass
 
                 if event.type == pygame.KEYUP:
                     if event.key==pygame.K_a:
