@@ -69,3 +69,7 @@ class PartyTimeSwitch(Event):
 class StopGameEvent(Event):
     def __init__(self):
         self.name = "Stop Game"
+
+class RestartGameEvent(Event):
+    def __init__(self):
+        self.name = "Restart Game"

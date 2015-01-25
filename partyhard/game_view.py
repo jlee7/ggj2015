@@ -28,11 +28,14 @@ class GameView(object):
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
         self.game_model = game_model
+        # flags
+        self.game_over_screen = False
+        self.partytime = True # man braucht hier leider ein eigenen party time flag
         # basic screen
         self.screen = pygame.display.set_mode((WIDTH, HEIGHT))
         self.background=pygame.Surface(self.screen.get_size())
         # Background image depending on mode
-        if self.game_model.partytime == True:
+        if self.partytime == True:
             self.background=pygame.image.load(BACKGROUND_PARTYTIME)
         else:
             self.background=pygame.image.load(BACKGROUND_STUDYTIME)
@@ -148,6 +151,10 @@ class GameView(object):
                 self.item_fall_speed_modifier = self.item_fall_speed_modifier_studytime
             self.itemgroup.update(self.partytime)
 
+        # Restart Game    
+        elif isinstance(event, RestartGameEvent):
+            self.game_sound.stop_all_sounds()
+            self.__init__(self.event_manager, self.game_model)
 
     def flip_partytime(self):
         if self.partytime == True:

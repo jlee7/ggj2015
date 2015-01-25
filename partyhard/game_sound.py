@@ -10,18 +10,21 @@ import pygame
 
 class GameSound(object):
     def __init__(self):
-        pass
+        self.sounds = []
 
     #----------------------------------------------------------------------
 
     def load_party_track(self):
         sound = pygame.mixer.Sound("assets/rock2.WAV")
+        self.sounds.append(sound)
         return sound
 
     def load_study_track(self):
         #sound = pygame.mixer.Sound("assets/dream.WAV")
     	sound = pygame.mixer.Sound("assets/rock.WAV")
-    	return sound
+        self.sounds.append(sound)
+        return sound
+
 
     def load_sound_mmmh(self):
         sound = pygame.mixer.Sound("assets/mmmh.wav")
@@ -54,3 +57,8 @@ class GameSound(object):
     def load_sound_yeah(self):
         sound = pygame.mixer.Sound("assets/yeah.wav")
         return sound
+
+    def stop_all_sounds(self):
+        for sound in self.sounds:
+            sound.stop()
+
