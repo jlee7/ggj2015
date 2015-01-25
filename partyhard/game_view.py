@@ -176,14 +176,13 @@ class GameView(object):
         #Punkteanzeige
         for text in self.textlist:
             self.screen.blit(text,(0,0))
-            pass
         #Modusanzeige
         self.screen.blit(self.modetext, (700, 0))
 
         #pygame.draw.rect(self.screen, (255, 0, 0), [20,20,20,20], 3)
 
-        pygame.display.update(self.dude.rect)
-
+        #pygame.display.update(self.dude.rect)
+        pygame.display.flip()
 
 
 class GameText(object):
