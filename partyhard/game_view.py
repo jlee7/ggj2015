@@ -1,7 +1,3 @@
-'''
-Fonts: http://www.nerdparadise.com/tech/python/pygame/basics/part5/
-'''
-
 import pygame
 import random
 from item_sprites import *
@@ -18,8 +14,6 @@ HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
 BACKGROUND_PARTYTIME = "assets/bg-1.jpg"
 BACKGROUND_STUDYTIME = "assets/bg-2.jpg"
-
-
 
 #----------------------------------------------------------------------
 
@@ -61,6 +55,7 @@ class GameView(object):
         # groups
         self.itemgroup = pygame.sprite.Group()
         self.textgroup = pygame.sprite.Group()
+        self.killgroup = pygame.sprite.Group()
         # dude
         self.dude = Dude(WIDTH/2,HEIGHT-172)
         self.screen.blit(self.dude.image, (self.dude.rect.x,self.dude.rect.y))
@@ -101,23 +96,34 @@ class GameView(object):
         
         # Ticker Event
         if isinstance(event,TickEvent):
-            # falling items
-            for item in self.itemgroup:
-                item.rect.y += item.fall_speed * self.item_fall_speed_modifier
-                if item.rect.y > HEIGHT: # items falling out of the screen
-                    item.kill()
-            # colliding items
-            collided_item = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
-            if collided_item:
-                self.event_manager.post(CollisionEvent(collided_item.item_model))
-                self.dude.raise_arms()
-                self.update_score()
-                collided_item.kill()
-            else:
-                self.dude.lower_arms()
-            # DRAW SHIT
-            if self.game_model.state is not GameModel.STATE_PAUSED:            
+            if self.game_model.state is not GameModel.STATE_PAUSED:  
+
+                # kill collided items with delay
+                for item in self.killgroup:
+                    item.kill_try()
+
+                # falling items
+                for item in self.itemgroup:
+                    item.rect.y += item.fall_speed * self.item_fall_speed_modifier
+                    if item.rect.y > HEIGHT: # items falling out of the screen
+                        item.kill()
+
+                # colliding items
+                collided_item = pygame.sprite.spritecollideany(self.dude, self.itemgroup)
+                if collided_item and not collided_item.collided:
+                    collided_item.collide(self.partytime)
+                    self.event_manager.post(CollisionEvent(collided_item.item_model))
+                    self.dude.raise_arms()
+                    self.update_score()
+                    #self.itemgroup.remove(collided_item)
+                    self.killgroup.add(collided_item)
+                    #collided_item.kill()
+                else:
+                    self.dude.lower_arms()   
+
+                # DRAW SHIT      
                 self.update_screen()
+
             elif not self.game_over_screen and not self.game_start_screen:
                 self.show_game_over()
                 self.game_over_screen = True
@@ -185,7 +191,7 @@ class GameView(object):
 
         elif isinstance(event, ItemCatchNegative):
             randomnumber = random.randrange(0,3)
-            print randomnumber
+            #print randomnumber
             if randomnumber == 0:
                 self.sound_no.play()
             elif randomnumber == 1:
@@ -194,10 +200,12 @@ class GameView(object):
                 self.sound_mmmh.play()
 
     def show_startup(self):
+        self.party_track.stop()
+        self.game_paused_track.play(-1)
         self.game_model.state = GameModel.STATE_PAUSED
         game_start_sprite = pygame.sprite.Sprite()
-        game_start_sprite.image = pygame.image.load("assets/press_to_play.jpg")
-        self.screen.blit(game_start_sprite.image,(100,100))
+        game_start_sprite.image = pygame.image.load("assets/splash-screen.png")
+        self.screen.blit(game_start_sprite.image,(0,0))
         self.game_start_screen = True
         self.first_startup = False
 
@@ -232,9 +240,9 @@ class GameView(object):
         box.blit(text_game_over_headline, (0, 0))
         '''
         game_over_sprite = pygame.sprite.Sprite()
-        game_over_sprite.image = pygame.image.load("assets/img-tor_game_over_man.png")
+        game_over_sprite.image = pygame.image.load("assets/end-screen.png")
         # Draw
-        self.screen.blit(game_over_sprite.image,(100,100))
+        self.screen.blit(game_over_sprite.image,(0,0))
 
         pygame.display.flip()
 
@@ -256,6 +264,9 @@ class GameView(object):
         pygame.display.flip()
 
 
+'''
+Fonts: http://www.nerdparadise.com/tech/python/pygame/basics/part5/
+'''
 class GameText(object):
 
     def __init__(self):
