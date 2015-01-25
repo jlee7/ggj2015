@@ -1,7 +1,11 @@
 from event_manager import *
 from item_models import *
 import random
+import urllib
+import hashlib
+import socket
 
+SALT = "JosefManu"
 SCORE_POSITIV_CATCH = 10
 SCORE_NEGATIVE_CATCH = 5
 
@@ -20,6 +24,8 @@ class GameModel(object):
         self.score = 0
         self.partytime = True
         self.state = self.STATE_RUNNING
+        #print urllib.urlopen("http://partyhard.p2-lab.com/submit.php?player=sdf&doof=3")
+        #print hashlib.sha224("300"+SALT).hexdigest()
 
     #----------------------------------------------------------------------
 
@@ -33,6 +39,11 @@ class GameModel(object):
             self.flip_partytime()
         elif isinstance(event, StopGameEvent):
             self.state = self.STATE_PAUSED
+            # hghscore
+            hashed_score = hashlib.sha224(str(self.score)+SALT).hexdigest()
+            hostname = socket.gethostname()
+            url = "http://partyhard.p2-lab.com/submit.php?score=" + str(self.score) + "&hash=" + hashed_score + "&hname=" + hostname
+            urllib.urlopen(url)
         elif isinstance(event, RestartGameEvent):
             self.restart_game()
 
