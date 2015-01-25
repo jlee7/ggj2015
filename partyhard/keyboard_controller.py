@@ -29,6 +29,10 @@ class KeyboardController(object):
             if event.key==pygame.K_ESCAPE:
                 pygame.quit()
                 exit(0)
+        if event.type == pygame.KEYDOWN:
+            if event.key==pygame.K_RETURN:
+                self.evManager.post(RestartGameEvent())
+
     #----------------------------------------------------------------------
 
     def collect_user_game_inputs(self, event):
@@ -39,7 +43,6 @@ class KeyboardController(object):
                 self.keys[1]=True
             elif event.key ==pygame.K_m:
                 self.controlkeys[0]=True
-                pass
         if event.type == pygame.KEYUP:
             if event.key==pygame.K_a:
                 self.keys[0]=False
@@ -47,8 +50,9 @@ class KeyboardController(object):
                 self.keys[1]=False
             elif event.key==pygame.K_m:
                 self.controlkeys[0]=False
+
     #----------------------------------------------------------------------
-    
+
     def process_user_game_inputs(self):
         direction = False
         if self.keys[0]:

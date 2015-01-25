@@ -33,6 +33,13 @@ class GameModel(object):
             self.flip_partytime()
         elif isinstance(event, StopGameEvent):
             self.state = self.STATE_PAUSED
+        elif isinstance(event, RestartGameEvent):
+            self.restart_game()
+
+    def restart_game(self):
+        self.score = 0
+        self.partytime = True
+        self.state = self.STATE_RUNNING
 
     def grant_score(self, event):
         if self.partytime:
