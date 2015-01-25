@@ -1,4 +1,5 @@
 import pygame
+import random
 from item_sprites import *
 from item_models import *
 from event_manager import *
@@ -12,7 +13,7 @@ WIDTH = 1024
 HEIGHT = 680
 DEMOSPRITE_POSITION = [300, 500]
 BACKGROUND_PARTYTIME = "assets/bg-1.jpg"
-BACKGROUND_STUDYTIME = "assets/bg_dummy_studytime.jpg"
+BACKGROUND_STUDYTIME = "assets/bg-2.jpg"
 
 #----------------------------------------------------------------------
 
@@ -20,12 +21,13 @@ class GameView(object):
 
     first_startup = True
 
-    def __init__(self, event_manager, game_model):
+    def __init__(self, event_manager, game_model, time_controller):
 
         # injects
         self.event_manager = event_manager
         self.event_manager.register_listener(self)
         self.game_model = game_model
+        self.time_controller = time_controller
         # flags
         self.game_over_screen = False
         self.game_start_screen = False
@@ -42,9 +44,12 @@ class GameView(object):
         # basic text
         self.game_text = GameText()
         self.text_score = self.game_text.get_score_text(self.game_model.score)
+        self.text_time = self.game_text.get_time(self.time_controller.get_countdown_time)
+
         self.mode_text1 = self.game_text.get_announce_text1()
         self.mode_text2 = self.game_text.get_announce_text2()
         self.textlist = [self.text_score]
+        ###self.timelist = [self.time_text]
         self.modelist = [self.mode_text1, self.mode_text2]
         self.modetext = self.modelist[0]
         # groups
@@ -89,7 +94,7 @@ class GameView(object):
 
     def notify(self, event):
         
-        # Ticke Event
+        # Ticker Event
         if isinstance(event,TickEvent):
             if self.game_model.state is not GameModel.STATE_PAUSED:  
 
@@ -122,6 +127,7 @@ class GameView(object):
             elif not self.game_over_screen and not self.game_start_screen:
                 self.show_game_over()
                 self.game_over_screen = True
+            self.update_time()
 
 
         # Spawn Event
@@ -173,7 +179,7 @@ class GameView(object):
         # Restart Game    
         elif isinstance(event, RestartGameEvent):
             self.game_sound.stop_all_sounds()
-            self.__init__(self.event_manager, self.game_model)
+            self.__init__(self.event_manager, self.game_model, self.time_controller)
 
         # Game Over
         elif isinstance(event, StopGameEvent):
@@ -184,7 +190,14 @@ class GameView(object):
             self.sound_yeah.play()
 
         elif isinstance(event, ItemCatchNegative):
-            self.sound_no.play()
+            randomnumber = random.randrange(0,3)
+            print randomnumber
+            if randomnumber == 0:
+                self.sound_no.play()
+            elif randomnumber == 1:
+                self.sound_no2.play()
+            elif randomnumber == 2:
+                self.sound_mmmh.play()
 
     def show_startup(self):
         self.game_model.state = GameModel.STATE_PAUSED
@@ -207,6 +220,10 @@ class GameView(object):
         self.textlist.remove(self.text_score)
         self.text_score = self.game_text.get_score_text(self.game_model.score)
         self.textlist.append(self.text_score)
+
+    def update_time(self):
+        self.text_time = self.game_text.get_time(self.time_controller.get_countdown_time())
+
 
     def show_game_over(self):
 
@@ -237,6 +254,7 @@ class GameView(object):
             self.screen.blit(text,(0,0))
         #Modusanzeige
         self.screen.blit(self.modetext, (700, 0))
+        self.screen.blit(self.text_time, (400, 0))
 
         #pygame.draw.rect(self.screen, (255, 0, 0), [20,20,20,20], 3)
 
@@ -254,10 +272,15 @@ class GameText(object):
         self.font_big = pygame.font.SysFont(None, 72)
         self.font_score = pygame.font.SysFont(None, 44)
         self.font_game_over_headline = pygame.font.SysFont(None, 122)
+        self.font_time = pygame .font.SysFont(None, 44)
 
     def get_score_text(self, score):
         score_text = self.font_score.render("Score: " + str(score), True, (0, 128, 0))
         return score_text
+
+    def get_time(self, time):
+        time_text = self.font_time.render("Time: " + str(time), True, (0, 128, 0))
+        return time_text
 
     def get_announce_text1(self):
         return self.font_big.render("Party Hard!", True, (0, 128, 0))
