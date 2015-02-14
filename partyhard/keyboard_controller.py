@@ -37,16 +37,16 @@ class KeyboardController(object):
 
     def collect_user_game_inputs(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key==pygame.K_a:
+            if event.key==pygame.K_LEFT:
                 self.keys[0]=True
-            elif event.key==pygame.K_d:
+            elif event.key==pygame.K_RIGHT:
                 self.keys[1]=True
             elif event.key ==pygame.K_m:
                 self.controlkeys[0]=True
         if event.type == pygame.KEYUP:
-            if event.key==pygame.K_a:
+            if event.key==pygame.K_LEFT:
                 self.keys[0]=False
-            elif event.key==pygame.K_d:
+            elif event.key==pygame.K_RIGHT:
                 self.keys[1]=False
             elif event.key==pygame.K_m:
                 self.controlkeys[0]=False

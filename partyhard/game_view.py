@@ -274,10 +274,9 @@ class GameText(object):
 
     def __init__(self):
 
-        self.font_big = pygame.font.Font("assets/JOKERMAN.TTF", 44) # Modus
-        self.font_score = pygame.font.Font("assets/JOKERMAN.TTF", 25) # Punkte
-        self.font_game_over_headline = pygame.font.Font("assets/JOKERMAN.TTF", 122)
-        self.font_time = pygame .font.Font("assets/JOKERMAN.TTF", 25) # Zeit
+        self.font_big = pygame.font.Font("assets/KOMIKAX_.ttf", 40) # Modus
+        self.font_score = pygame.font.Font("assets/KOMIKAX_.ttf", 25) # Punkte
+        self.font_time = pygame .font.Font("assets/KOMIKAX_.ttf", 25) # Zeit
 
     def get_score_text(self, score):
         score_text = self.font_score.render("Score: " + str(score), True, (255, 255, 255))
@@ -292,8 +291,3 @@ class GameText(object):
 
     def get_announce_text2(self):
         return self.font_big.render("Study Time!", True, (0, 0, 255))
-
-    def get_game_over_headline(self):
-        return self.font_game_over_headline.render("GAME OVER", True, (128, 128, 128))
-        return score_text
-
