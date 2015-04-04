@@ -1,0 +1,58 @@
+<?php
+
+    /*
+    * http://gluephp.com/documentation.html
+    * https://github.com/jtopjian/gluephp 
+    */
+
+    require_once('gluephp/glue.php');
+    
+    $urls = array(
+        '/' => 'index',
+        '/db/fulldb' => 'fullDbDump',
+        '/info' => 'info',
+		'/submit_score' => 'submit_score'
+    );
+    
+    class index {
+        function GET() {
+            echo "Hello, World!";
+        }
+    }
+    class info {
+        function GET() {
+            phpinfo();
+        }
+    }
+
+	class submit_score {
+		function GET() {
+			echo "matches:";
+			print_r($_GET);
+		}
+	}
+
+    class fullDbDump {
+    
+        function GET() {
+        
+            # http://stackoverflow.com/questions/6750531/using-a-php-file-to-generate-a-mysql-dump
+
+            $servername = "mysql5.sina-otto.de";
+            $username = "db262760";
+            $password = "ruvage79";
+            $db = "db262760";
+            $now_time = time();
+            
+            #exec('/usr/bin/mysqldump --user=' . $username . ' --password=' . $password . ' --host=' . $servername . ' ' . $db . ' > /tmp/sina_full.sql', $results, $return_var);
+
+            exec('/usr/bin/mysqldump --add-drop-database --databases --user=' . $username . ' --password=' . $password . ' --host=' . $servername . ' ' . $db . ' ', $results, $return_var);
+            
+            //var_dump($return_var);
+            //var_dump($results);
+            $dump_output = implode(PHP_EOL, $results);
+            echo $dump_output;
+        }
+    }
+    
+    glue::stick($urls);
