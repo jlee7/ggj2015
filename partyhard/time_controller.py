@@ -68,5 +68,5 @@ class TimeController(object):
         self.next_switch_tick = self.tick_number + self.get_next_switch_delay()
 
     def get_countdown_time(self):
-        return (GAME_LENGTH_SEC - (self.game_time / 1000))
+        return (GAME_LENGTH_SEC - (self.game_time / 1000) - 1)
 

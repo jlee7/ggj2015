@@ -47,10 +47,14 @@ class GameModel(object):
         elif isinstance(event, RestartGameEvent):
             self.restart_game()
 
+
     def restart_game(self):
         self.score = 0
         self.partytime = True
         self.state = self.STATE_RUNNING
+        print "GameModel: restart game"
+        
+        
 
     def grant_score(self, event):
         if self.partytime:
